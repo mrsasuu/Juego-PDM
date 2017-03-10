@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         canvasView = (CanvasView) findViewById(R.id.canvasView);
 
     }
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cambiaAzul(View view) {
-        canvasView.cambiaColor(Color.BLUE);
+        canvasView.cambiaColor(Color.RED);
     }
 
     public void cambiaAmarillo(View view) {

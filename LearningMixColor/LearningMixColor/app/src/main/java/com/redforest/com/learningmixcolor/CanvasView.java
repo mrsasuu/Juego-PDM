@@ -12,6 +12,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by NeN on 09/03/2017.
  */
@@ -19,40 +23,61 @@ import android.view.View;
 public class CanvasView extends View {
     private int height,weight;
     private Bitmap bitmap;
-    private Canvas canvas;
+    private Canvas mCanvas;
     private Path path;
     private Paint paint;
     private float mX,mY;
     private static final float TOLERANCE = 5;
     Context context;
+    Map<Path,Integer> colorPaths;
+    ArrayList<Path> paths;
 
     public CanvasView(Context context, AttributeSet attributeSet) {
         super(context,attributeSet);
+        setBackgroundColor(Color.TRANSPARENT);
         this.context = context;
-
+        colorPaths = new HashMap<>();
+        paths = new ArrayList<>();
         path = new Path();
 
         paint = new Paint();
+       // paint.setXfermode(new PixelXorXfermode(0xFFFFFFFF));
         paint.setAntiAlias(true);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeWidth(20f);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
+        paint.setDither(true);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        colorPaths.put(path,paint.getColor());
+        paths.add(path);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SCREEN));
     }
     public void cambiaColor(int color){
+        path = new Path();
         paint.setColor(color);
+        paths.add(path);
+        colorPaths.put(path,paint.getColor());
     }
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
-        canvas.drawPath(path,paint);
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvasBitmap = new Canvas(bitmap);
+        for (Path p : paths){
+            paint.setColor(colorPaths.get(p));
+            canvasBitmap.save();
+            canvasBitmap.drawPath(p, paint);
+            canvasBitmap.restore();
+            //canvas.drawPath(p, paint);
+        }
+        canvas.drawBitmap(bitmap,0,0,new Paint());
     }
     @Override
     protected void onSizeChanged(int w,int h, int oldw, int oldh){
         super.onSizeChanged(w,h,oldw,oldh);
         bitmap = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
+        mCanvas = new Canvas(bitmap);
 
     }
     private void startTouch(float x,float y){
