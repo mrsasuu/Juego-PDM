@@ -25,10 +25,11 @@ public class CanvasView extends View {
     private Path path;
     private Paint paint,paintNew;
     private float mX,mY;
-    private static final float TOLERANCE = 5;
+    private static final float TOLERANCE = 0;
     Context context;
     Map<Path,Integer> colorPaths;
     ArrayList<Path> paths;
+
 
     public CanvasView(Context context, AttributeSet attributeSet) {
         super(context,attributeSet);
@@ -43,7 +44,7 @@ public class CanvasView extends View {
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(20f);
+        paint.setStrokeWidth(30f);
         paint.setDither(true);
         paint.setStrokeCap(Paint.Cap.ROUND);
         colorPaths.put(path,paint.getColor());
@@ -65,11 +66,14 @@ public class CanvasView extends View {
         super.onDraw(canvas);
         for (Path p : paths){
             paint.setColor(colorPaths.get(p));
-            Bitmap bt = Bitmap.createBitmap(getWidth(),getHeight(),Bitmap.Config.ARGB_8888);
-            mCanvas.setBitmap(bt);
+            //Bitmap bt = Bitmap.createBitmap(getWidth(),getHeight(),Bitmap.Config.ARGB_8888);
+            //mCanvas.setBitmap(bt);
             mCanvas.drawPath(p, paint);
-            bitmapSRC = MyPorterDuffMode.applyMixedReality(bitmapSRC,bt);
-            mCanvas.setBitmap(bitmapSRC);
+            //bitmapSRC = MyPorterDuffMode.applyMixedReality(bitmapSRC,bt);
+            //Bitmap mutableBitmap = bitmapSRC.copy(Bitmap.Config.ARGB_8888, true);
+           // mCanvas.setBitmap(mutableBitmap);
+
+            //mCanvas.setBitmap(bitmapSRC);
 
             //canvas.drawPath(p, paint);
         }
@@ -88,20 +92,23 @@ public class CanvasView extends View {
     }
 
     private void moveTouch(float x, float y){
+        //path.quadTo(x,y,x,(y+y)/2);
+        path.addCircle(x, y, 30, Path.Direction.CW);
+       /*
         float dx = Math.abs(x-mX);
         float dy =Math.abs(y-mY);
         if(dx >=TOLERANCE || dy >= TOLERANCE){
             path.quadTo(mX,mY,(x+mX)/2,(y+mY)/2);
             mX=x;
             mY=y;
-        }
+        }*/
     }
     public void clearCanvas(){
         path.reset();
         invalidate();
     }
     private void upTouch(){
-        path.lineTo(mX,mY);
+        //path.lineTo(mX,mY);
     }
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){

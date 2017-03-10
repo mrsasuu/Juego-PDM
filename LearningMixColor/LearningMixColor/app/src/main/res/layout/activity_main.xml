@@ -6,28 +6,88 @@
      android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_width="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="match_parent">
 
-    <com.redforest.com.learningmixcolor.CanvasView
+        <com.redforest.com.learningmixcolor.CanvasView
+            android:layout_width="match_parent"
+            android:layout_height="420dp"
+            android:id="@+id/canvasView"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="match_parent">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:onClick="clearCanvas"
+            android:text="CLEAR CANVAS" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:onClick="cambiaAzul"
+            android:text="Azul" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Amarillo"
+            android:onClick="cambiaAmarillo"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Rojo"
+            android:onClick="cambiaRojo"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Verde"
+            android:onClick="cambiaVerde"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Magenta"
+            android:onClick="cambiaMagenta"
+            />
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:id="@+id/canvasView"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="CLEAR CANVAS"
-        android:onClick="clearCanvas"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Azul"
-        android:onClick="cambiaAzul"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Amarillo"
-        android:onClick="cambiaAmarillo"
-        />
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <Button
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Rojo"
+            android:onClick="cambiaRojo"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Verde"
+            android:onClick="cambiaVerde"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Magenta"
+            android:onClick="cambiaMagenta"
+            />
+    </LinearLayout>
+
 </LinearLayout>

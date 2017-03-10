@@ -25,10 +25,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cambiaAzul(View view) {
-        canvasView.cambiaColor(Color.RED);
+        canvasView.cambiaColor(Color.BLUE);
     }
 
     public void cambiaAmarillo(View view) {
+        canvasView.cambiaColor(Color.YELLOW);
+    }
+
+    public void cambiaRojo(View view) {
+        canvasView.cambiaColor(Color.RED);
+    }
+
+    public void cambiaVerde(View view) {
         canvasView.cambiaColor(Color.GREEN);
+    }
+
+    public void cambiaMagenta(View view) {
+        canvasView.cambiaColor(Color.MAGENTA);
     }
 }

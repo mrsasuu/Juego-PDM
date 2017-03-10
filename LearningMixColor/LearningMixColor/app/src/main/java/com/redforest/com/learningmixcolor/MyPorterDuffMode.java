@@ -70,7 +70,7 @@ public class MyPorterDuffMode
             }
         }
         Bitmap bp = Bitmap.createBitmap(resultPixels, width, height, srcBmp.getConfig());
-        return convertToMutable(bp);
+        return bp;
     }
 
     /**
