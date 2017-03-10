@@ -6,8 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +20,7 @@ import java.util.Map;
 
 public class CanvasView extends View {
     private int height,weight;
-    private Bitmap bitmap;
+    private Bitmap bitmapSRC;
     private Canvas mCanvas;
     private Path path;
     private Paint paint,paintNew;
@@ -41,7 +39,6 @@ public class CanvasView extends View {
         path = new Path();
         paintNew=new Paint();
         paint = new Paint();
-       // paint.setXfermode(new PixelXorXfermode(0xFFFFFFFF));
         paint.setAntiAlias(true);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
@@ -51,7 +48,11 @@ public class CanvasView extends View {
         paint.setStrokeCap(Paint.Cap.ROUND);
         colorPaths.put(path,paint.getColor());
         paths.add(path);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
+
+        //PorterDuff porterDuff = new PorterDuff();
+        //PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.ADD);
+
+        //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
     }
     public void cambiaColor(int color){
         path = new Path();
@@ -64,17 +65,21 @@ public class CanvasView extends View {
         super.onDraw(canvas);
         for (Path p : paths){
             paint.setColor(colorPaths.get(p));
+            Bitmap bt = Bitmap.createBitmap(getWidth(),getHeight(),Bitmap.Config.ARGB_8888);
+            mCanvas.setBitmap(bt);
             mCanvas.drawPath(p, paint);
+            bitmapSRC = MyPorterDuffMode.applyMixedReality(bitmapSRC,bt);
+            mCanvas.setBitmap(bitmapSRC);
+
             //canvas.drawPath(p, paint);
         }
-        canvas.drawBitmap(bitmap,0,0,paintNew);
+        canvas.drawBitmap(bitmapSRC,0,0,paintNew);
     }
     @Override
     protected void onSizeChanged(int w,int h, int oldw, int oldh){
         super.onSizeChanged(w,h,oldw,oldh);
-        bitmap = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(bitmap);
-
+        bitmapSRC = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
+        mCanvas = new Canvas(bitmapSRC);
     }
     private void startTouch(float x,float y){
         path.moveTo(x,y);
