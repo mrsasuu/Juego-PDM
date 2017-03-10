@@ -25,7 +25,7 @@ public class CanvasView extends View {
     private Bitmap bitmap;
     private Canvas mCanvas;
     private Path path;
-    private Paint paint;
+    private Paint paint,paintNew;
     private float mX,mY;
     private static final float TOLERANCE = 5;
     Context context;
@@ -39,7 +39,7 @@ public class CanvasView extends View {
         colorPaths = new HashMap<>();
         paths = new ArrayList<>();
         path = new Path();
-
+        paintNew=new Paint();
         paint = new Paint();
        // paint.setXfermode(new PixelXorXfermode(0xFFFFFFFF));
         paint.setAntiAlias(true);
@@ -51,7 +51,7 @@ public class CanvasView extends View {
         paint.setStrokeCap(Paint.Cap.ROUND);
         colorPaths.put(path,paint.getColor());
         paths.add(path);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SCREEN));
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
     }
     public void cambiaColor(int color){
         path = new Path();
@@ -62,16 +62,12 @@ public class CanvasView extends View {
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
-        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvasBitmap = new Canvas(bitmap);
         for (Path p : paths){
             paint.setColor(colorPaths.get(p));
-            canvasBitmap.save();
-            canvasBitmap.drawPath(p, paint);
-            canvasBitmap.restore();
+            mCanvas.drawPath(p, paint);
             //canvas.drawPath(p, paint);
         }
-        canvas.drawBitmap(bitmap,0,0,new Paint());
+        canvas.drawBitmap(bitmap,0,0,paintNew);
     }
     @Override
     protected void onSizeChanged(int w,int h, int oldw, int oldh){
