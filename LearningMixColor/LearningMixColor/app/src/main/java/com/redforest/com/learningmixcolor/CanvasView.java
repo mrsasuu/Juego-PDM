@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
 /**
  * Created by NeN on 09/03/2017.
  */
@@ -25,6 +27,7 @@ public class CanvasView extends View {
     private float mX,mY;
     private static final float TOLERANCE = 5;
     Context context;
+    ArrayList<Path> paths = new ArrayList<>();
 
     public CanvasView(Context context, AttributeSet attributeSet) {
         super(context,attributeSet);
@@ -38,9 +41,21 @@ public class CanvasView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeWidth(20f);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
+        //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
     }
     public void cambiaColor(int color){
+
+        paths.add(path);
+        path = new Path();
+
+        paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.BLACK);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeWidth(20f);
+        //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
+
         paint.setColor(color);
     }
     @Override
@@ -75,6 +90,7 @@ public class CanvasView extends View {
         invalidate();
     }
     private void upTouch(){
+
         path.lineTo(mX,mY);
     }
     @Override
