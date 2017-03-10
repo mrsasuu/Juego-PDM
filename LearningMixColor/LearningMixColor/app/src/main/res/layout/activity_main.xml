@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    tools:context="com.redforest.com.learningmixcolor.MainActivity"
+     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent">
+
+    <com.redforest.com.learningmixcolor.CanvasView
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:id="@+id/canvasView"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="CLEAR CANVAS"
+        android:onClick="clearCanvas"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Azul"
+        android:onClick="cambiaAzul"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Amarillo"
+        android:onClick="cambiaAmarillo"
+        />
+</LinearLayout>
