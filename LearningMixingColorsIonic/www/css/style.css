@@ -1,1 +1,69 @@
 /* Empty. Add your own CSS if you like */
+
+
+.Paleta{
+	position: absolute;	
+	bottom: 34px;
+	
+}
+.Paleta-Hidden{
+	display: none;	
+}
+
+.Pincel{
+	width:95%!important;
+	position: absolute;	
+	bottom: 34px;
+}
+
+.Azul{
+	background-color: blue;
+}
+
+.Negro{
+	background-color: black;
+}
+
+.Verde{
+	background-color: green;
+}
+
+.Rojo{
+	background-color: red;
+}
+
+.Naranja{
+	background-color: orange;
+}
+
+.Morado{
+	background-color: purple;
+}
+
+.Turquesa{
+	background-color: #00c7ff;
+}
+
+.Gris{
+	background-color: #929292;
+}
+
+.Color{
+	box-shadow: 1px 2px 3px #777;
+	border-radius: 7px;
+	width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.Pincela-Div{
+	width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}

@@ -6,6 +6,7 @@
     <title></title>
 
     <link rel="manifest" href="manifest.json">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 
     <!-- un-comment this code to enable service worker
     <script>
@@ -198,9 +199,9 @@ p {
       <ion-header-bar id ="Cabecera" class="bar-stable">
         <div class="bar bar-header">
 		  <button class="button button-icon icon ion-navicon"></button>
-		  <div class="h1 title">Mixing Colors</div>
+			<div id="titulo" class="title">Mixing Colors</div>
 		  <a class="button button-clear button-positive">
-			<img class="icon col-center" src="img/palette.svg" />
+			<i class ="icon fa fa-floppy-o"> </i>
 		  </a>
 		</div>
       </ion-header-bar>
@@ -211,8 +212,53 @@ p {
             <p id="error">Please upgrade your browser.</p>
         </canvas>
 		
+		<div id="ventana-paleta" class=" card Paleta Paleta-Hidden">
+			<div class="row">
+				<div class="col Azul Color " onclick="setColor('#0000ff')">
+				</div>
+				<div class="col Morado Color " onclick="setColor('#7D26CD')">
+				</div>
+				<div class="col Verde Color " onclick="setColor('#008000')">
+				</div>
+				<div class="col Rojo Color " onclick="setColor('#ff0000')">
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col Naranja Color "onclick="setColor('#ffa500')">
+				</div>
+				<div class="col Negro Color "onclick="setColor('#000000')">
+				</div>
+				<div class="col Turquesa Color "onclick="setColor('#00c7ff')">
+				</div>
+				<div class="col Gris Color "onclick="setColor('#929292')">
+				</div>
+
+			</div>
+			
+
+		</div>
+		
+		 <div id="ventana-pincel" class=" ">
+			<div class="card Pincel row">
+				<div class="col Pincel-Div col-30" onclick="setColor('#0000ff')">
+					<img src="img/small-brush.svg" />
+				</div>
+				<div class="col Pincel-Div col-30" onclick="setColor('#7D26CD')">
+					<img src="img/medium-brush.svg" />
+				</div>
+				<div class="col Pincel-Div col-30" onclick="setColor('#008000')">
+					<img src="img/large-brush.svg" />
+				</div>
+
+			</div>
+			
+
+		</div>
+		
+		
 		<div id ="Tabs" class="tabs tabs-icon-only row">
-		  <a class="tab-item ">
+		  <a id="paleta" class="tab-item" onclick="paleta()">
 			<img class="icon col-center" src="img/palette.svg" />
 		  </a>
 		  <a class="tab-item ">

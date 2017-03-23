@@ -31,8 +31,12 @@ $(document).ready(function(e) {
 	
 	//- $('#Tabs').height()
 	var height =  parseInt($('#Cabecera').css('padding-top')) + parseInt($('#Cabecera').css('padding-bottom'));
+	var height2 =  parseInt($('#Tabs').css('padding-top')) + parseInt($('#Tabs').css('padding-bottom') );
 	
-	$('#canvas').attr('height',$(window).height() - $('ion-header-bar').height()- $('#Tabs').height());
+	$('#canvas').attr('height',$(window).height() - $('ion-header-bar').height() - height - $('#Tabs').height() - height2);
+	$('#canvas').css('top','44px');
+	
+	$('#ventana-paleta').attr('bottom','34px');
 	
 	//document.getElementById('canvas').setAttribute("width", window.innerWidth);
 	//document.getElementById('canvas').setAttribute("height", window.innerHeight-220);
@@ -356,4 +360,30 @@ function dif(pos1, pos2)
 	}
 	return pos2 - pos1;
 }
+
+
+function paleta()
+{
+	if($('#ventana-paleta').hasClass( "Paleta-Hidden" ))
+		$('#ventana-paleta').removeClass('Paleta-Hidden');
+	else
+		$('#ventana-paleta').addClass('Paleta-Hidden');
+}
+
+function setColor(color){
+	clr[0] = HexToR(color);
+	clr[1] = HexToG(color);
+	clr[2] = HexToB(color);
+	clr[3] = 1;
+	
+	$('#ventana-paleta').addClass('Paleta-Hidden');
+	
+	
+}
+
+/*
+$("#paleta").on("tap",function(){
+  alert("Hola");
+});*/
+
 

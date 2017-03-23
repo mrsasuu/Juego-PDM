@@ -20,5 +20,9 @@ angular.module('starter', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+	//$('#titulo').css('left', '43%');
+	$('#titulo').removeAttr('style');
+	$('#titulo').css('textAlign','center');
+	//$('#titulo').removeClass('title-left');
   });
 })
