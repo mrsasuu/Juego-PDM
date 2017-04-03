@@ -14,6 +14,11 @@ var cpcontext;
 var dist;
 var angle;
 var i;
+var clrAnterior = [255,0,0,1];
+
+var radioAnterior;
+var eraser = false;
+var pen = false;
 
 var modeButtons = [];
 
@@ -347,7 +352,16 @@ function onUp(e)
 
 function mix(colour1, colour2, mv)
 {
-	var val = colour1 * mv + colour2 * (1 - mv);
+	if(eraser){
+		var val = 255;
+	}		
+	else if(pen){
+		var val = colour1;
+		
+	}else{
+		var val = colour1 * mv + colour2 * (1 - mv);
+	}
+		
 		
 	return val;
 }
@@ -380,6 +394,64 @@ function setColor(color){
 	
 	
 }
+
+function setRadius(radioPincel){
+	if(!pen){
+		radius = radioPincel;
+	
+		$('#ventana-pincel').addClass('Paleta-Hidden');
+	}
+}
+
+function pincel()
+{
+	if($('#ventana-pincel').hasClass( "Paleta-Hidden" ))
+		$('#ventana-pincel').removeClass('Paleta-Hidden');
+	else
+		$('#ventana-pincel').addClass('Paleta-Hidden');
+}
+
+function lapiz(){
+	if(pen){
+		pen = false;
+		radius = radioAnterior;
+		
+	}else{
+		pen = true;
+		eraser = false;
+		radioAnterior = radius;
+		
+		radius = 2;
+	}
+}
+
+function borrar(){
+	if(eraser){
+		eraser = false;
+	
+		clrAnterior[0] = clr[0];
+		clrAnterior[1] = clr[1];
+		clrAnterior[2] = clr[2];
+		clrAnterior[3] = clr[3];
+		
+		clr[0] = HexToR("#ffffff");
+		clr[1] = HexToG("#ffffff");
+		clr[2] = HexToB("#ffffff");
+		clr[3] = 1;
+	}	
+	else{
+		clr[0] = clrAnterior[0];
+		clr[1] = clrAnterior[1]; 
+		clr[2] = clrAnterior[2];
+		clr[3] = clrAnterior[3];
+		pen = false;
+		eraser = true;
+	}
+		
+	
+}
+
+
 
 /*
 $("#paleta").on("tap",function(){

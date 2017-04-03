@@ -239,15 +239,15 @@ p {
 
 		</div>
 		
-		 <div id="ventana-pincel" class=" ">
+		 <div id="ventana-pincel" class="Paleta-Hidden">
 			<div class="card Pincel row">
-				<div class="col Pincel-Div col-30" onclick="setColor('#0000ff')">
+				<div class="col Pincel-Div col-30" onclick="setRadius(5)">
 					<img src="img/small-brush.svg" />
 				</div>
-				<div class="col Pincel-Div col-30" onclick="setColor('#7D26CD')">
+				<div class="col Pincel-Div col-30" onclick="setRadius(10)">
 					<img src="img/medium-brush.svg" />
 				</div>
-				<div class="col Pincel-Div col-30" onclick="setColor('#008000')">
+				<div class="col Pincel-Div col-30" onclick="setRadius(25)">
 					<img src="img/large-brush.svg" />
 				</div>
 
@@ -261,13 +261,13 @@ p {
 		  <a id="paleta" class="tab-item" onclick="paleta()">
 			<img class="icon col-center" src="img/palette.svg" />
 		  </a>
-		  <a class="tab-item ">
+		  <a id="pincel" class="tab-item " onclick="pincel()">
 			<img class="icon col-center" src="img/medium-brush.svg" />
 		  </a>
-		  <a class="tab-item ">
+		  <a class="tab-item "onclick="lapiz()" >
 			<img class="icon col-center" src="img/edit.svg" />
 		  </a>
-		  <a class="tab-item ">
+		  <a class="tab-item "onclick="borrar()">
 			<img class="icon col-center" src="img/eraser.svg" />
 		  </a>
 		</div>
