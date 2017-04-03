@@ -426,6 +426,7 @@ function lapiz(){
 }
 
 function borrar(){
+	
 	if(eraser){
 		eraser = false;
 	
@@ -440,6 +441,7 @@ function borrar(){
 		clr[3] = 1;
 	}	
 	else{
+		radius = 10;
 		clr[0] = clrAnterior[0];
 		clr[1] = clrAnterior[1]; 
 		clr[2] = clrAnterior[2];
