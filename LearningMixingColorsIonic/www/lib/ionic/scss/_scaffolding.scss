@@ -159,7 +159,7 @@ body.grade-c {
 }
 .grade-b .scroll-bar-indicator,
 .grade-c .scroll-bar-indicator {
-  // disable rgba background and border radius for low end devices
+  // disable rgba background and border radio for low end devices
   background: #aaa;
 
   &.scroll-bar-fade-out {

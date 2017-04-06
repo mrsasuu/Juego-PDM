@@ -8329,7 +8329,7 @@ input:checked + .checkbox-icon:after {
    &::-ms-thumb {
      width: $range-slider-width;
      height: $range-slider-height;
-     border-radius: $range-slider-border-radius;
+     border-radio: $range-slider-border-radio;
      background-color: $toggle-handle-off-bg-color;
      border-color:$toggle-handle-off-bg-color;
      box-shadow: $range-slider-box-shadow;
