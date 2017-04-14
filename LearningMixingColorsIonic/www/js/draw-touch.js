@@ -3,14 +3,10 @@ var lastX = 0;
 var lastY = 0;
 var mixval = 0.8;
 var Pincel;
-var radio = 10;
+var radio = 13;
 var drawingCanvas;
 var context;
 var dist;
-var angulo;
-var i;
-var colorAnterior = [255, 0, 0, 1];
-var radioAnterior;
 var goma = false;
 var lapiz = false;
 var marginTop = 44;
@@ -41,7 +37,6 @@ $(document).ready(function (e) {
   var contextL = c.getContext("2d");
   contextL.rect(20, 20, 150, 100);
   contextL.stroke();
-
   if (drawingCanvas.getContext) {
     context = drawingCanvas.getContext('2d');
     context.lineJoin = 'round';
@@ -123,33 +118,37 @@ function onMove(e) {
   var yp = e.touches[0].pageY - marginTop;
   //A la distancia actual le sumamos la distancia que debería recorrer con respecto al ángulo que debería aparecer
   //Y obtenemos la localización a pintar
-  var xp2 = xp + Pincel.dx;
-  var yp2 = yp + Pincel.dy;
+  var xp2 = xp+((xp-lastX)*5);
+  var yp2 = yp+((yp-lastY)*5);
   //Obtenemos el pixel situado en xp2 y yp2 de la imágen que está actualmente pintada
+
   var imageData = context.getImageData(xp2, yp2, 1, 1);
   var pixel = imageData.data;
+
+  console.log('R: ' + pixel[0] + '<br>G: ' + pixel[1] + '<br>B: ' + pixel[2] + '<br>A: ' + pixel[3]+'XP: ' +xp+ '<br>YP: ' +yp+ '<br>XP2: ' +xp2+ '<br>YP2: ' +yp2);
 
   //Creamos una imágen temporal y un pixel
   var tmpData = context.createImageData(1, 1);
   var tmpPixel = tmpData.data;
   //Comprobamos el alpha del pixel si es 0 es que no se ha pintado nada y establezo el valor al pixel con el color
-  if (pixel[3] === 0) {
+  if (pixel[0] === 0 && pixel[1] === 0 && pixel[2] === 0 ) {
     pixel[0] = Pincel.colour[0];
     pixel[1] = Pincel.colour[1];
     pixel[2] = Pincel.colour[2];
     pixel[3] = Pincel.colour[3];
   }
+
   //Mezclamos el color de la cerda con el color del pixel con un factor mixval
   var r = mix(Pincel.colour[0], pixel[0], mixval);
   var g = mix(Pincel.colour[1], pixel[1], mixval);
   var b = mix(Pincel.colour[2], pixel[2], mixval);
   var a = mix(Pincel.colour[3], pixel[3], mixval);
-
   //El color que se obtiene lo guardamos en la cerda actual y en el pixel temporal
-  Pincel.colour[0] = r;
+  //  HAY QUE ARREGLARLO PORQUE SIN ESTO LO CONSIGUE PERO SE VE MAL PORQUE NO MANTIENE EL COLOR
+  /*Pincel.colour[0] = r;
   Pincel.colour[1] = g;
   Pincel.colour[2] = b;
-  Pincel.colour[3] = a;
+  Pincel.colour[3] = a;*/
 
   tmpPixel[0] = r;
   tmpPixel[1] = g;
@@ -159,13 +158,11 @@ function onMove(e) {
   context.beginPath();
   context.strokeStyle = 'rgba( ' + tmpPixel[0] + ', ' + tmpPixel[1] + ', ' + tmpPixel[2] + ', ' + tmpPixel[3] + ')';
   context.lineWidth = 1;
+  context.moveTo(lastX, lastY);
   if (goma) {
-    context.moveTo(lastX, lastY)
     context.clearRect(xp, yp, radio, radio);
   } else if (lapiz) {
-      context.moveTo(lastX, lastY);
       context.lineWidth = radio;
-
       context.lineTo(xp, yp);
       context.stroke();
   } else {

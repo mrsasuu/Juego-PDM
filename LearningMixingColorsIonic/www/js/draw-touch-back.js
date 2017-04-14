@@ -174,7 +174,7 @@ function onMove(e)
       var r = mix(cerdasPincel[i].colour[0], pixel[0], mixval);
       var g = mix(cerdasPincel[i].colour[1], pixel[1], mixval);
       var b = mix(cerdasPincel[i].colour[2], pixel[2], mixval);
-      var a = cerdasPincel[i].colour[3];
+      var a = mix(cerdasPincel[i].colour[3], pixel[3], mixval);
 
       //El color que se obtiene lo guardamos en la cerda actual y en el pixel temporal
       cerdasPincel[i].colour[0] = r;
@@ -185,7 +185,7 @@ function onMove(e)
       tmpPixel[0] = r;
       tmpPixel[1] = g;
       tmpPixel[2] = b;
-      //tmpPixel[3] = a;
+      tmpPixel[3] = a;
       //Creamos un path con el color del pixel temporal con tamaño de línea de 1 desde la posición inicial
       context.beginPath();
       context.strokeStyle = 'rgba( ' + tmpPixel[0] + ', ' + tmpPixel[1] + ', ' + tmpPixel[2] + ', ' + a + ')';
@@ -245,7 +245,7 @@ function mix(colour1, colour2, mv)
 	else if(lapiz)
 		val = colour1;
 	else
-    val = colour1 * mv + colour2 * (1 - mv);
+    val = (colour1+colour2)/2;
 
 	return val;
 }
