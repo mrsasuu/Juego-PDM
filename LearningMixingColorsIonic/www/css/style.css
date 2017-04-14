@@ -2,20 +2,28 @@
 
 
 .Paleta{
-	position: absolute;	
+	position: absolute;
 	bottom: 34px;
-	
+
 }
 .Paleta-Hidden{
-	display: none;	
+	display: none;
 }
 
 .Pincel{
 	width:95%!important;
-	position: absolute;	
+	position: absolute;
 	bottom: 34px;
 }
-
+.Cian{
+  background-color: #00FFFF;
+}
+.Magenta{
+  background-color: #FF00FF;
+}
+.Amarillo{
+  background-color: #FFFF00;
+}
 .Azul{
 	background-color: blue;
 }
@@ -23,31 +31,9 @@
 .Negro{
 	background-color: black;
 }
-
-.Verde{
-	background-color: green;
-}
-
 .Rojo{
 	background-color: red;
 }
-
-.Naranja{
-	background-color: orange;
-}
-
-.Morado{
-	background-color: purple;
-}
-
-.Turquesa{
-	background-color: #00c7ff;
-}
-
-.Gris{
-	background-color: #929292;
-}
-
 .Color{
 	box-shadow: 1px 2px 3px #777;
 	border-radius: 7px;
