@@ -43,6 +43,8 @@ $(document).ready(function(e) {
 	
 	$('#ventana-paleta').attr('bottom','34px');
 	
+
+	
 	//document.getElementById('canvas').setAttribute("width", window.innerWidth);
 	//document.getElementById('canvas').setAttribute("height", window.innerHeight-220);
 	
@@ -450,6 +452,15 @@ function borrar(){
 		eraser = true;
 	}
 		
+	
+}
+
+function save(){
+	var canvas = document.getElementById("canvas");
+	
+	var dt = canvas.get(0).toDataUrl();
+	this.href = dt;
+	
 	
 }
 
