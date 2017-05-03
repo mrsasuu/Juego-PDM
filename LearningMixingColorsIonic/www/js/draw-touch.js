@@ -22,14 +22,14 @@ $(document).ready(function (e) {
   initialiseUI();
 
   window.addEventListener('orientationchange', lockOrientation, true);
-  $('#canvasFondo').attr('width', $(window).width());
+  //$('#canvasFondo').attr('width', $(window).width());
   $('#canvas').attr('width', $(window).width());
 
   var height = parseInt($('#Cabecera').css('padding-top')) + parseInt($('#Cabecera').css('padding-bottom'));
   var height2 = parseInt($('#Tabs').css('padding-top')) + parseInt($('#Tabs').css('padding-bottom'));
 
-  $('#canvasFondo').attr('height', $(window).height() - $('ion-header-bar').height() - height - $('#Tabs').height() - height2);
-  $('#canvasFondo').css('top', marginTop + 'px');
+  /* $('#canvasFondo').attr('height', $(window).height() - $('ion-header-bar').height() - height - $('#Tabs').height() - height2);
+  $('#canvasFondo').css('top', marginTop + 'px'); */
   $('#canvas').attr('height', $(window).height() - $('ion-header-bar').height() - height - $('#Tabs').height() - height2);
   $('#canvas').css('top', marginTop + 'px');
 
@@ -38,9 +38,9 @@ $(document).ready(function (e) {
 
   drawingCanvas = document.getElementById('canvas');
   var c = document.getElementById("canvasFondo");
-  var contextL = c.getContext("2d");
-  contextL.rect(20, 20, 150, 100);
-  contextL.stroke();
+  //var contextL = c.getContext("2d");
+  /* contextL.rect(20, 20, 150, 100);
+  contextL.stroke(); */
   if (drawingCanvas.getContext) {
     context = drawingCanvas.getContext('2d');
     context.lineJoin = 'round';
@@ -359,14 +359,32 @@ function componentToHex(c) {
 function rgbToHex(r,g,b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
-
+function auxiliar(){
+	chooseColor(rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
+}
 function mixColors(){
 	
-	colorMixRes[0] = mix(colorMix1[0], colorMix2[0], 0.5);
-	colorMixRes[1] = mix(colorMix1[1], colorMix2[1], 0.5);
-	colorMixRes[2] = mix(colorMix1[2], colorMix2[2], 0.5);
+	var mixValue = 0.8;
+	colorMixRes[0] = mix(colorMix1[0], colorMix2[0], mixValue);
+	colorMixRes[1] = mix(colorMix1[1], colorMix2[1], mixValue);
+	colorMixRes[2] = mix(colorMix1[2], colorMix2[2], mixValue);
 	
-	$('#resultado').css("background-color",rgbToHex(colorMixRes[0],colorMixRes[1],colorMixRes[2]));
+	
+	$('#resultado').css("background-color",rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
+	$('#color-Mezcla').css("background-color",rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
+	//$('#color-Mezcla').prop('onclick',null).off('click');
+	//$('#color-Mezcla').click(chooseColor("'" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "'"));
+	//$('#color-Mezcla').attr("onclick","caca('" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "')");
+	//$('#color-Mezcla').setAttribute('onclick',"caca('" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "')");
+	//$("#foo > div").length
+	var colorMezcla = document.getElementById('color-Mezcla');
+	colorMezcla.addEventListener("touchend",auxiliar, false);
+	//colorMezcla.attr("onclick",chooseColor("'" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "'"));
+	
+	//$('#color-Mezcla').unbind('click');
+	
+	//$('#color-Mezcla').click(chooseColor(rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2]))));
+	
 	//$('#resultado').css("background-color",rgbToHex(colorMix1[0],colorMix1[1],colorMix1[2]));
 	//$('#resultado').css("background-color",colorMix1);
 }

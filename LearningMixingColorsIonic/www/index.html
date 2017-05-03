@@ -102,9 +102,9 @@ p {
 		<div id="container">
 
 
-      <canvas id="canvasFondo" width="100" height="100" >
+      <!-- <canvas id="canvasFondo" width="100" height="100" >
         <p id="errorP">Please upgrade your browser.</p>
-      </canvas>
+      </canvas> -->
       <canvas id="canvas" width="100" height="100" style="background-color: rgba(0,0,0,.0);">
         <p id="error">Please upgrade your browser.</p>
       </canvas>
@@ -124,13 +124,13 @@ p {
 		 <div id="ventana-pincel" class="">
 			<div class="card Ventana Pincel row">
 				<div class="col Pincel-Div col-30" onclick="setRadius(5)">
-					<div id="mix1"class ="Recuadro"></div>
+					<div id="mix1"class ="Recuadro center"></div>
 				</div>
-				<div class="col Pincel-Div col-30" onclick="setRadius(10)">
-					
+				<div class="col Pincel-Div col-30"  style="text-align: center;" onclick="setRadius(10)">
+					<div class="RecuadroS center ">+</div>
 				</div>
 				<div class="col Pincel-Div col-30" onclick="setRadius(25)">
-					<div id="mix2" class ="Recuadro"></div>
+					<div id="mix2" class ="Recuadro center"></div>
 				</div>
 
 			</div>
@@ -147,18 +147,17 @@ p {
 				<div class="col Pincel-Div col-30">
 				</div>
 				<div class="col Pincel-Div col-30">
-					<div id="resultado"class ="Recuadro"></div>
+					<div id="resultado"class ="Recuadro center"></div>
 				</div><div class="col Pincel-Div col-30"></div>
 
 			</div>
 			
 			<div class="card Pincel row">
-				<div class="row">
-					<div class="col Rojo Color " onclick="chooseColor('#FF0000')"></div>
-					<div class="col Azul Color " onclick="chooseColor('#0000FF')"></div>
-					<div class="col Amarillo Color " onclick="chooseColor('#FFFF00')"></div>
-					<div class="col Cian Color "onclick="chooseColor('#00FFFF')"></div>
-					<div class="col Negro Color "onclick="chooseColor('#000000')"></div>
+				<div id="Colours-1" class="row">
+					<div class="col Magenta Color2 " onclick="chooseColor('#FF00FF')"></div>
+					<div class="col Amarillo Color2 " onclick="chooseColor('#FFFF00')"></div>
+					<div class="col Cian Color2 "onclick="chooseColor('#00FFFF')"></div>
+					<div id="color-Mezcla" class="col Color2 " ></div>
 				</div>
 
 			</div>
