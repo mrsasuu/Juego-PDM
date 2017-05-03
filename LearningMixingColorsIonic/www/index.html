@@ -121,16 +121,44 @@ p {
 			</div>
 		</div>
 
-		 <div id="ventana-pincel" class="Paleta-Hidden">
-			<div class="card Pincel row">
+		 <div id="ventana-pincel" class="">
+			<div class="card Ventana Pincel row">
 				<div class="col Pincel-Div col-30" onclick="setRadius(5)">
-					<img src="img/small-brush.svg" />
+					<div id="mix1"class ="Recuadro"></div>
 				</div>
 				<div class="col Pincel-Div col-30" onclick="setRadius(10)">
-					<img src="img/medium-brush.svg" />
+					
 				</div>
 				<div class="col Pincel-Div col-30" onclick="setRadius(25)">
-					<img src="img/large-brush.svg" />
+					<div id="mix2" class ="Recuadro"></div>
+				</div>
+
+			</div>
+			<div class="Mezclar row">
+				<div class="col Pincel-Div col-30">
+				</div>
+				<div class="col Pincel-Div col-30" style="text-align:center;">
+					<button onclick="mixColors()">Mezclar</button>
+				</div><div class="col Pincel-Div col-30"></div>
+
+			</div>
+			
+			<div class="Resultado row">
+				<div class="col Pincel-Div col-30">
+				</div>
+				<div class="col Pincel-Div col-30">
+					<div id="resultado"class ="Recuadro"></div>
+				</div><div class="col Pincel-Div col-30"></div>
+
+			</div>
+			
+			<div class="card Pincel row">
+				<div class="row">
+					<div class="col Rojo Color " onclick="chooseColor('#FF0000')"></div>
+					<div class="col Azul Color " onclick="chooseColor('#0000FF')"></div>
+					<div class="col Amarillo Color " onclick="chooseColor('#FFFF00')"></div>
+					<div class="col Cian Color "onclick="chooseColor('#00FFFF')"></div>
+					<div class="col Negro Color "onclick="chooseColor('#000000')"></div>
 				</div>
 
 			</div>
@@ -154,34 +182,7 @@ p {
 		  </a>
 		</div>
 
-        <div id="control" style="display:none;">
-
-            <div id="cpicker"></div>
-
-            <div id="sliders">
-
-                <p>Brush Size</p>
-                <div class="slider" id="sizeslider"></div>
-
-                <p>Paint Amount</p>
-                <div class="slider" id="mixslider"></div>
-
-            </div>
-
-
-
-            <ol id="modes">
-                <li id="mode0" class="modeButton">Normal</li>
-                <li id="mode1" class="modeButton">Straw</li>
-                <li id="mode2" class="modeButton">Squiggly</li>
-                <li id="mode3" class="modeButton">Solid</li>
-            </ol>
-
-            <ol id="otherbuttons">
-                <li id="but1" class="button">Clear</li>
-            </ol>
-
-        </div>
+        
     </div>
       </ion-content>
     </ion-pane>
