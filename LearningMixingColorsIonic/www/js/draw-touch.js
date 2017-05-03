@@ -8,7 +8,7 @@ var drawingCanvas;
 var context;
 var dist;
 var goma = false;
-var lapiz = false;
+var lapiz = true;
 var marginTop = 44;
 var colorMix1 = [255,255,255,1];
 var colorMix2 = [255,255,255,1];
@@ -34,7 +34,7 @@ $(document).ready(function (e) {
   $('#canvas').css('top', marginTop + 'px');
   $('#ventana-paleta').attr('bottom', '34px');
   $('ion-content').removeClass();
-  $('#ventana-pincel').addClass('Paleta-Hidden');
+  $('#ventana-mezcla').addClass('Paleta-Hidden');
   drawingCanvas = document.getElementById('canvas');
   var c = document.getElementById("canvasFondo");
   //var contextL = c.getContext("2d");
@@ -111,7 +111,6 @@ function onDown(e) {
     dy: dist,
     colour: [rt, gt, bt, at]
   };
-  console.log("Me he pulsado");
 }
 
 function onMove(e) {
@@ -121,13 +120,6 @@ function onMove(e) {
   var xp = e.touches[0].pageX;
   var yp = e.touches[0].pageY - marginTop;
   //A la distancia actual le sumamos la distancia que debería recorrer con respecto al ángulo que debería aparecer
-  /*//Y obtenemos la localización a pintar
-  console.log("LastX: " + lastX + " LastY: " + lastY);
-  console.log("xp: " + xp + " yp: " + yp);*/
-  // var xp2 = xp+((xp-lastX)/**5*/);
-  //var yp2 = yp+((yp-lastY)/**5*/);
-  //var xp2=xp+Pincel.dx;
-  // var yp2=yp+Pincel.dy;
   //Obtenemos el pixel situado en xp2 y yp2 de la imágen que está actualmente pintada
   var xp2 = xp;
   var yp2 = yp;
@@ -151,54 +143,17 @@ function onMove(e) {
   var tmpPixel = tmpData.data;
   //Comprobamos el alpha del pixel si es 0 es que no se ha pintado nada y establezo el valor al pixel con el color
   if (pixel[0] === 0 && pixel[1] === 0 && pixel[2] === 0) {
-    /*pixel[0] = Pincel.colour[0];
-     pixel[1] = Pincel.colour[1];
-     pixel[2] = Pincel.colour[2];
-     pixel[3] = Pincel.colour[3];*/
-    /*pixel[0] = colores[0];
-    pixel[1] = colores[1];
-    pixel[2] = colores[2];
-    pixel[3] = colores[3];*/
     Pincel.colour[0] = colores[0];
     Pincel.colour[1] = colores[1];
     Pincel.colour[2]= colores[2];
     Pincel.colour[3] = colores[3];
   }
-  // console.log('R: ' + pixel[0] + ' G: ' + pixel[1] + ' B: ' + pixel[2]);
-  // console.log('RA: ' + colorAnterior[0] + ' GA: ' + pixel[1] + ' BA: ' + pixel[2]);
   //Mezclamos el color de la cerda con el color del pixel con un factor mixval
-
-
- /* if (colorAnterior[0] != pixel[0])
-    var r = mix(Pincel.colour[0], pixel[0], mixval);
-  else*/
     r = Pincel.colour[0];
-
-  /*if (colorAnterior[1] != pixel[1])
-    var g = mix(Pincel.colour[1], pixel[1], mixval);
-  else*/
     g = Pincel.colour[1];
-
- /* if (colorAnterior[2] != pixel[2])
-    var b = mix(Pincel.colour[2], pixel[2], mixval);
-  else*/
     b = Pincel.colour[2];
-
-  /*if (colorAnterior[3] != pixel[3])
-    var a = mix(Pincel.colour[3], pixel[3], mixval);
-  else*/
     a = Pincel.colour[3];
-/*
-  colorAnterior[0] = pixel[0];
-  colorAnterior[1] = pixel[1];
-  colorAnterior[2] = pixel[2];
-  colorAnterior[3] = pixel[3];*/
-  //El color que se obtiene lo guardamos en la cerda actual y en el pixel temporal
 
-  //console.log('R: ' + pixel[0] + ' G: ' + pixel[1] + ' B: ' + pixel[2]);
-  /*console.log('MIXR: ' + r + ' MIXG: ' + g + ' MIXB: ' + b);
-  console.log('PR: ' + Pincel.colour[0] + ' PG: ' + Pincel.colour[1] + ' PB: ' + Pincel.colour[2]);*/
-  //  HAY QUE ARREGLARLO PORQUE SIN ESTO LO CONSIGUE PERO SE VE MAL PORQUE NO MANTIENE EL COLOR
   Pincel.colour[0] = r;
   Pincel.colour[1] = g;
   Pincel.colour[2] = b;
@@ -214,12 +169,6 @@ function onMove(e) {
   context.lineWidth = 1;
   context.moveTo(lastX, lastY);
   if (goma) {
-    //context.clearRect(xp, yp, radio, radio);
-	/*
-	context.arc(xp, yp, radio, 0, 2 * Math.PI, false);
-    //context.clip();
-    context.clearRect(xp - radio - 1, yp - radio - 1, radio * 2 + 2, radio * 2 + 2);*/
-
 	context.globalCompositeOperation = 'destination-out';
     context.beginPath();
     context.arc(xp, yp, radio, 0, 2 * Math.PI, false);
@@ -250,15 +199,6 @@ function onUp(e) {
 
 function mix(colour1, colour2, mv) {
   var val = 0;
-  /*if (goma)
-    val = 255;
-  else if (lapiz)
-    val = (colour1 + colour2) / 2;
-  else
-    val = colour1 * mv + colour2 * (1 - mv);
-*/
-
-	//val = colour1 * mv + colour2 * (1 - mv);
 	val = (colour1 + colour2) / 2;
   return val;
 }
@@ -285,10 +225,15 @@ function to_image() {
 }
 
 function seleccionaPaleta() {
-  if ($('#ventana-paleta').hasClass("Paleta-Hidden"))
-    $('#ventana-paleta').removeClass('Paleta-Hidden');
-  else
-    $('#ventana-paleta').addClass('Paleta-Hidden');
+  if ($('#ventana-paleta').hasClass("Paleta-Hidden")) {
+    $('#ventana-paleta').removeClass('Paleta-Hidden').css("z-index",1);
+    if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
+      $('#ventana-mezcla').addClass('Paleta-Hidden');
+  }
+  else {
+    $('#ventana-paleta').addClass('Paleta-Hidden').css("z-index", -1);
+    $('#canvas').css("z-index", 1);
+  }
 }
 
 function setColor(color) {
@@ -308,29 +253,38 @@ function setColor(color) {
 function setRadius(radioPincel) {
   lapiz = false;
   radio = radioPincel;
-  $('#ventana-pincel').addClass('Paleta-Hidden');
+  $('#ventana-mezcla').addClass('Paleta-Hidden');
 }
 
-function seleccionaPincel() {
-  if ($('#ventana-pincel').hasClass("Paleta-Hidden")) {
-    $('#ventana-pincel').removeClass('Paleta-Hidden').css("z-index",1);
+function seleccionaMezcla() {
+  if ($('#ventana-mezcla').hasClass("Paleta-Hidden")) {
+    $('#ventana-mezcla').removeClass('Paleta-Hidden').css("z-index",1);
     $('#canvas').css("z-index",-1);
-    $('#ventana-paleta').addClass('Paleta-Hidden');
+    if (!$('#ventana-paleta').hasClass("Paleta-Hidden"))
+      $('#ventana-paleta').addClass('Paleta-Hidden');
   }
   else {
-    $('#ventana-pincel').addClass('Paleta-Hidden').attr('height', 0).css("z-index",-1);
+    $('#ventana-mezcla').addClass('Paleta-Hidden').attr('height', 0).css("z-index",-1);
     $('#canvas').css("z-index", 1);
   }
 }
 
 function seleccionaLapiz() {
-  lapiz = !lapiz;
+  lapiz = true;
   goma = false;
+  if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
+    $('#ventana-mezcla').addClass('Paleta-Hidden');
+  if (!$('#ventana-paleta').hasClass("Paleta-Hidden"))
+    $('#ventana-paleta').addClass('Paleta-Hidden');
 }
 
 function seleccionaGoma() {
   goma = !goma;
   lapiz = false;
+  if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
+    $('#ventana-mezcla').addClass('Paleta-Hidden');
+  if (!$('#ventana-paleta').hasClass("Paleta-Hidden"))
+    $('#ventana-paleta').addClass('Paleta-Hidden');
 }
 
 function chooseColor(color){
@@ -365,6 +319,7 @@ function rgbToHex(r,g,b) {
 }
 function auxiliar(){
 	chooseColor(rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
+
 }
 function mixColors(){
 
@@ -372,25 +327,19 @@ function mixColors(){
 	colorMixRes[0] = mix(colorMix1[0], colorMix2[0], mixValue);
 	colorMixRes[1] = mix(colorMix1[1], colorMix2[1], mixValue);
 	colorMixRes[2] = mix(colorMix1[2], colorMix2[2], mixValue);
-
-
-	$('#resultado').css("background-color",rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
-	$('#color-Mezcla').css("background-color",rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
-	//$('#color-Mezcla').prop('onclick',null).off('click');
-	//$('#color-Mezcla').click(chooseColor("'" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "'"));
-	//$('#color-Mezcla').attr("onclick","caca('" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "')");
-	//$('#color-Mezcla').setAttribute('onclick',"caca('" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "')");
-	//$("#foo > div").length
+  var colorResultante = rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2]));
+	$('#resultado').css("background-color",colorResultante);
+	$('#color-Mezcla').css("background-color",colorResultante);
+  $('#resultado').click(function (e) {
+    setColor(colorResultante);
+    if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
+      $('#ventana-mezcla').addClass('Paleta-Hidden');
+    $('#canvas').css("z-index", 1);
+  });
+  setColor(colorResultante);
 	var colorMezcla = document.getElementById('color-Mezcla');
 	colorMezcla.addEventListener("touchend",auxiliar, false);
-	//colorMezcla.attr("onclick",chooseColor("'" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "'"));
 
-	//$('#color-Mezcla').unbind('click');
-
-	//$('#color-Mezcla').click(chooseColor(rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2]))));
-
-	//$('#resultado').css("background-color",rgbToHex(colorMix1[0],colorMix1[1],colorMix1[2]));
-	//$('#resultado').css("background-color",colorMix1);
 }
 
 

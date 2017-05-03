@@ -296,16 +296,16 @@ function setRadius(radioPincel){
     lapiz=false;
 		radio = radioPincel;
     numCerdasPincel=80;
-		$('#ventana-pincel').addClass('Paleta-Hidden');
+		$('#ventana-mezcla').addClass('Paleta-Hidden');
 	//}
 }
 
 function seleccionaPincel()
 {
-	if($('#ventana-pincel').hasClass( "Paleta-Hidden" ))
-		$('#ventana-pincel').removeClass('Paleta-Hidden');
+	if($('#ventana-mezcla').hasClass( "Paleta-Hidden" ))
+		$('#ventana-mezcla').removeClass('Paleta-Hidden');
 	else
-		$('#ventana-pincel').addClass('Paleta-Hidden');
+		$('#ventana-mezcla').addClass('Paleta-Hidden');
 }
 
 function seleccionaLapiz(){
