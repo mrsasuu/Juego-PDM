@@ -6,47 +6,55 @@
 	bottom: 34px;
 
 }
-
+#ventana-pincel{
+  width: 100%;
+  height: 100%;
+  background: white;
+}
 .Ventana{
 	top: 30px;
+  height: 20%;
 }
 .Mezclar{
-	top: 30%;
-	position: absolute;
-	height: 70px;
+  top: 32%;
+  position: absolute;
+  height: 15%;
 }
 
 .Recuadro{
     border-style: solid;
     border-width: 1px;
-	border-radius: 5px; 
+	border-radius: 5px;
 	border-color: black;
-	width:100px;
-	height: 100px;
-	
+  width: 100%;
+  height: 100%;
+
 }
 
 .RecuadroS{
-	width:100px;
-	height: 100px;
-	
+  width: 100%;
+  height: 100%;
 	color: black;
-	
+  font-size: 28vw
 }
 .Resultado{
-	top: 45%;
+	top: 50%;
 	position: absolute;
+  height: 20%;
 }
 
 .Mezclar button{
 
-	text-align:center;
-	height: 60px;
-	width:160px;
-	border-radius: 5px; 
-	background-color: #2488ff; 
-	color: white;
-	font-size: 17px;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #2488ff;
+  color: white;
+  font-size: 4.5vw;
+}
+#selector-color{
+  height: 22%;
 }
 
 .Paleta-Hidden{
@@ -77,6 +85,25 @@
 .Rojo{
 	background-color: red;
 }
+#text-color{
+  margin-left: 10px;
+  clear: both;
+  position: relative;
+  top: 1%;
+}
+#text-color p{
+  color:black;
+  font-size: 4.5vw;
+  font-weight: bold;
+}
+#color-seleccionado{
+  box-shadow: 1px 2px 3px #777;
+  border-radius: 5px;
+  width: 30%;
+  height: 70%;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
 .Color{
 	box-shadow: 1px 2px 3px #777;
 	border-radius: 7px;
@@ -91,18 +118,19 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
-	
+
 	 vertical-align: middle;
 }
+#Colours-1{
+  height: 65%;
+  margin-top: 1%;
+}
 .Color2{
-	box-shadow: 1px 2px 3px #777;
-	border-radius: 7px;
-	width: 25px;
-    height: 50px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    margin-top: 10px;
+  box-shadow: 1px 2px 3px #777;
+  border-radius: 7px;
+  margin: 2%;
+  min-height: 60px;
+  height: 95%;
 }
 
 .Pincela-Div{

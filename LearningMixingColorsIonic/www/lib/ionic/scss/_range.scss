@@ -74,7 +74,7 @@
    &::-ms-thumb {
      width: $range-slider-width;
      height: $range-slider-height;
-     border-radio: $range-slider-border-radio;
+     border-radius: $range-slider-border-radius;
      background-color: $toggle-handle-off-bg-color;
      border-color:$toggle-handle-off-bg-color;
      box-shadow: $range-slider-box-shadow;

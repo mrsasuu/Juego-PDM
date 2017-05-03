@@ -669,7 +669,7 @@ window.ionic.version = '1.3.3';
   // pointer type
   ionic.Gestures.POINTER_MOUSE = 'mouse';
   ionic.Gestures.POINTER_TOUCH = 'touch';
-  ionic.Gestures.POINTER_PEN = 'lapiz';
+  ionic.Gestures.POINTER_PEN = 'pen';
 
   // touch event defines
   ionic.Gestures.EVENT_START = 'start';
@@ -1223,10 +1223,10 @@ window.ionic.version = '1.3.3';
 
 
     /**
-     * calculate the angulo between two coordinates
+     * calculate the angle between two coordinates
      * @param   {Touch}     touch1
      * @param   {Touch}     touch2
-     * @returns {Number}    angulo
+     * @returns {Number}    angle
      */
     getAngle: function getAngle(touch1, touch2) {
       var y = touch2.pageY - touch1.pageY,
@@ -1236,7 +1236,7 @@ window.ionic.version = '1.3.3';
 
 
     /**
-     * angulo to direction define
+     * angle to direction define
      * @param   {Touch}     touch1
      * @param   {Touch}     touch2
      * @returns {String}    direction constant, like ionic.Gestures.DIRECTION_LEFT
@@ -1564,7 +1564,7 @@ window.ionic.version = '1.3.3';
    *          deltaY      {Number}        the delta on y axis we haved moved
    *          velocityX   {Number}        the velocity on the x
    *          velocityY   {Number}        the velocity on y
-   *          angulo       {Number}        the angulo we are moving
+   *          angle       {Number}        the angle we are moving
    *          direction   {String}        the direction we are moving. matches ionic.Gestures.DIRECTION_UP|DOWN|LEFT|RIGHT
    *          distance    {Number}        the distance we haved moved
    *          scale       {Number}        scaling of the touches, needs 2 touches
@@ -1992,7 +1992,7 @@ window.ionic.version = '1.3.3';
       // on the page
       prevent_default: false,
 
-      // disable mouse events, so only touch (or lapiz!) input triggers events
+      // disable mouse events, so only touch (or pen!) input triggers events
       prevent_mouseevents: false
     },
     handler: function touchGesture(ev, inst) {

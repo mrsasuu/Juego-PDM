@@ -20,7 +20,7 @@ var colorAnterior = [255, 0, 0, 1];
 $(document).ready(function (e) {
 
   initialiseUI();
-
+  $("#color-seleccionado").css("background",rgbToHex(colores[0],colores[1],colores[2]));
   window.addEventListener('orientationchange', lockOrientation, true);
   //$('#canvasFondo').attr('width', $(window).width());
   $('#canvas').attr('width', $(window).width());
@@ -32,10 +32,9 @@ $(document).ready(function (e) {
   $('#canvasFondo').css('top', marginTop + 'px'); */
   $('#canvas').attr('height', $(window).height() - $('ion-header-bar').height() - height - $('#Tabs').height() - height2);
   $('#canvas').css('top', marginTop + 'px');
-
   $('#ventana-paleta').attr('bottom', '34px');
   $('ion-content').removeClass();
-
+  $('#ventana-pincel').addClass('Paleta-Hidden');
   drawingCanvas = document.getElementById('canvas');
   var c = document.getElementById("canvasFondo");
   //var contextL = c.getContext("2d");
@@ -220,13 +219,13 @@ function onMove(e) {
 	context.arc(xp, yp, radio, 0, 2 * Math.PI, false);
     //context.clip();
     context.clearRect(xp - radio - 1, yp - radio - 1, radio * 2 + 2, radio * 2 + 2);*/
-	
+
 	context.globalCompositeOperation = 'destination-out';
     context.beginPath();
     context.arc(xp, yp, radio, 0, 2 * Math.PI, false);
     context.fill();
     context.restore();
-	
+
   } else if (lapiz) {
 	context.globalCompositeOperation = 'source-over';
 	//context.globalCompositeOperation = 'lighter';
@@ -300,7 +299,7 @@ function setColor(color) {
 
   lapiz = true;
   goma = false;
-  
+  $("#color-seleccionado").css("background",rgbToHex(colores[0],colores[1],colores[2]));
   $('#ventana-paleta').addClass('Paleta-Hidden');
 
 
@@ -313,10 +312,15 @@ function setRadius(radioPincel) {
 }
 
 function seleccionaPincel() {
-  if ($('#ventana-pincel').hasClass("Paleta-Hidden"))
-    $('#ventana-pincel').removeClass('Paleta-Hidden');
-  else
-    $('#ventana-pincel').addClass('Paleta-Hidden');
+  if ($('#ventana-pincel').hasClass("Paleta-Hidden")) {
+    $('#ventana-pincel').removeClass('Paleta-Hidden').css("z-index",1);
+    $('#canvas').css("z-index",-1);
+    $('#ventana-paleta').addClass('Paleta-Hidden');
+  }
+  else {
+    $('#ventana-pincel').addClass('Paleta-Hidden').attr('height', 0).css("z-index",-1);
+    $('#canvas').css("z-index", 1);
+  }
 }
 
 function seleccionaLapiz() {
@@ -336,18 +340,18 @@ function chooseColor(color){
 		colorMix1[1] = HexToG(color);
 		colorMix1[2] = HexToB(color);
 		colorMix1[3] = 1;
-		
+    $("#text-c").text("Otro color para la mezcla:");
 		$('#mix1').css("background-color", color);
-		  
+
 	}else{
 		colorMix2[0] = HexToR(color);
 		colorMix2[1] = HexToG(color);
 		colorMix2[2] = HexToB(color);
 		colorMix2[3] = 1;
-		
+    $("#text-c").text("Elige un color para la mezcla:");
 		$('#mix2').css("background-color", color);
 	}
-	
+
 	contador++;
 }
 
@@ -363,13 +367,13 @@ function auxiliar(){
 	chooseColor(rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
 }
 function mixColors(){
-	
+
 	var mixValue = 0.8;
 	colorMixRes[0] = mix(colorMix1[0], colorMix2[0], mixValue);
 	colorMixRes[1] = mix(colorMix1[1], colorMix2[1], mixValue);
 	colorMixRes[2] = mix(colorMix1[2], colorMix2[2], mixValue);
-	
-	
+
+
 	$('#resultado').css("background-color",rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
 	$('#color-Mezcla').css("background-color",rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
 	//$('#color-Mezcla').prop('onclick',null).off('click');
@@ -380,11 +384,11 @@ function mixColors(){
 	var colorMezcla = document.getElementById('color-Mezcla');
 	colorMezcla.addEventListener("touchend",auxiliar, false);
 	//colorMezcla.attr("onclick",chooseColor("'" + rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])) + "'"));
-	
+
 	//$('#color-Mezcla').unbind('click');
-	
+
 	//$('#color-Mezcla').click(chooseColor(rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2]))));
-	
+
 	//$('#resultado').css("background-color",rgbToHex(colorMix1[0],colorMix1[1],colorMix1[2]));
 	//$('#resultado').css("background-color",colorMix1);
 }
