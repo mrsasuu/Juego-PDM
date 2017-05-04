@@ -14,9 +14,8 @@ var colorMix1 = [255,255,255,1];
 var colorMix2 = [255,255,255,1];
 var colorMixRes = [255,255,255];
 var contador = 0;
-// 0 = normal, 1 = straw
+var contadores =[{cont:0,color:"",porcentaje:0},{cont:0,color:"",porcentaje:0},{cont:0,color:"",porcentaje:0},{cont:0,color:"",porcentaje:0}];
 var mode = 0;
-var colorAnterior = [255, 0, 0, 1];
 $(document).ready(function (e) {
 
   initialiseUI();
@@ -34,7 +33,7 @@ $(document).ready(function (e) {
   $('#canvas').css('top', marginTop + 'px');
   $('#ventana-paleta').attr('bottom', '34px');
   $('ion-content').removeClass();
-  $('#ventana-mezcla').addClass('Paleta-Hidden');
+  $('#ventana-mezcla').addClass('Hidden');
   drawingCanvas = document.getElementById('canvas');
   var c = document.getElementById("canvasFondo");
   //var contextL = c.getContext("2d");
@@ -199,15 +198,51 @@ function onUp(e) {
 
 function mix(colour1, colour2, mv) {
   var val = 0;
-	val = (colour1 + colour2) / 2;
+  var c=[0,0,0];
+  var resColor = [0,0,0,0];
+
+  for(i=0;i<4;i++){
+    if(contadores[i].porcentaje>0){
+      c[0]=HexToR(contadores[i].color);
+      c[1]=HexToG(contadores[i].color);
+      c[2]=HexToB(contadores[i].color);
+
+      var co = rgbToCmyk(c[0],c[1],c[2]);
+      var flag=true;
+      var arrayPorcentajes = [];
+      for(j=0;j<4;j++)
+        if(contadores[j].porcentaje!=0)
+          arrayPorcentajes.push(contadores[j].porcentaje);
+
+      for(t=0;t<arrayPorcentajes.length && flag;t++)
+        if(t+1<arrayPorcentajes.length)
+          flag = arrayPorcentajes[t]==arrayPorcentajes[t+1];
+
+      if(!flag) {
+        resColor[0] += co[0] * (contadores[i].porcentaje / 100);
+        resColor[1] += co[1] * (contadores[i].porcentaje / 100);
+        resColor[2] += co[2] * (contadores[i].porcentaje / 100);
+        resColor[3] += co[3] * (contadores[i].porcentaje / 100);
+      }else{
+        resColor[0] += co[0];
+        resColor[1] += co[1];
+        resColor[2] += co[2];
+        resColor[3] += co[3];
+      }
+    }
+  }
+ /* var color1 = rgbToCmyk(colour1[0],colour1[1],colour1[2]);
+  var color2 = rgbToCmyk(colour2[0],colour2[1],colour2[2]);
+  */
+/*
+  resColor[0] = color1[0]+color2[0];
+  resColor[1] = color1[1]+color2[1];
+  resColor[2] = color1[2]+color2[2];
+  resColor[3] = color1[3]+color2[3];
+*/
+  val = cmykToRgb(resColor[0],resColor[1],resColor[2],resColor[3]);
+	//val = (colour1 + colour2) / 2;
   return val;
-}
-
-function dif(pos1, pos2) {
-  if (pos1 > pos2)
-    return pos1 - pos2;
-
-  return pos2 - pos1;
 }
 function to_image() {
   var canvas = document.getElementById("canvas");
@@ -225,13 +260,13 @@ function to_image() {
 }
 
 function seleccionaPaleta() {
-  if ($('#ventana-paleta').hasClass("Paleta-Hidden")) {
-    $('#ventana-paleta').removeClass('Paleta-Hidden').css("z-index",1);
-    if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
-      $('#ventana-mezcla').addClass('Paleta-Hidden');
+  if ($('#ventana-paleta').hasClass("Hidden")) {
+    $('#ventana-paleta').removeClass('Hidden').css("z-index",1);
+    if (!$('#ventana-mezcla').hasClass("Hidden"))
+      $('#ventana-mezcla').addClass('Hidden');
   }
   else {
-    $('#ventana-paleta').addClass('Paleta-Hidden').css("z-index", -1);
+    $('#ventana-paleta').addClass('Hidden').css("z-index", -1);
     $('#canvas').css("z-index", 1);
   }
 }
@@ -245,7 +280,7 @@ function setColor(color) {
   lapiz = true;
   goma = false;
   $("#color-seleccionado").css("background",rgbToHex(colores[0],colores[1],colores[2]));
-  $('#ventana-paleta').addClass('Paleta-Hidden');
+  $('#ventana-paleta').addClass('Hidden');
 
 
 }
@@ -253,18 +288,18 @@ function setColor(color) {
 function setRadius(radioPincel) {
   lapiz = false;
   radio = radioPincel;
-  $('#ventana-mezcla').addClass('Paleta-Hidden');
+  $('#ventana-mezcla').addClass('Hidden');
 }
 
 function seleccionaMezcla() {
-  if ($('#ventana-mezcla').hasClass("Paleta-Hidden")) {
-    $('#ventana-mezcla').removeClass('Paleta-Hidden').css("z-index",1);
+  if ($('#ventana-mezcla').hasClass("Hidden")) {
+    $('#ventana-mezcla').removeClass('Hidden').css("z-index",1);
     $('#canvas').css("z-index",-1);
-    if (!$('#ventana-paleta').hasClass("Paleta-Hidden"))
-      $('#ventana-paleta').addClass('Paleta-Hidden');
+    if (!$('#ventana-paleta').hasClass("Hidden"))
+      $('#ventana-paleta').addClass('Hidden');
   }
   else {
-    $('#ventana-mezcla').addClass('Paleta-Hidden').attr('height', 0).css("z-index",-1);
+    $('#ventana-mezcla').addClass('Hidden').attr('height', 0).css("z-index",-1);
     $('#canvas').css("z-index", 1);
   }
 }
@@ -272,22 +307,48 @@ function seleccionaMezcla() {
 function seleccionaLapiz() {
   lapiz = true;
   goma = false;
-  if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
-    $('#ventana-mezcla').addClass('Paleta-Hidden');
-  if (!$('#ventana-paleta').hasClass("Paleta-Hidden"))
-    $('#ventana-paleta').addClass('Paleta-Hidden');
+  if (!$('#ventana-mezcla').hasClass("Hidden"))
+    $('#ventana-mezcla').addClass('Hidden');
+  if (!$('#ventana-paleta').hasClass("Hidden"))
+    $('#ventana-paleta').addClass('Hidden');
 }
 
 function seleccionaGoma() {
   goma = !goma;
   lapiz = false;
-  if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
-    $('#ventana-mezcla').addClass('Paleta-Hidden');
-  if (!$('#ventana-paleta').hasClass("Paleta-Hidden"))
-    $('#ventana-paleta').addClass('Paleta-Hidden');
+  if (!$('#ventana-mezcla').hasClass("Hidden"))
+    $('#ventana-mezcla').addClass('Hidden');
+  if (!$('#ventana-paleta').hasClass("Hidden"))
+    $('#ventana-paleta').addClass('Hidden');
 }
 
-function chooseColor(color){
+function chooseColor(elem,color){
+  contadores[elem-1].cont++;
+  contador++;
+  switch (elem){
+    case 1:
+      if ($('#btMenos1').hasClass("Hidden"))
+        $('#btMenos1').removeClass('Hidden');
+      $("#color1").text(contadores[elem-1].cont);
+      break;
+    case 2:
+      if ($('#btMenos2').hasClass("Hidden"))
+        $('#btMenos2').removeClass('Hidden');
+      $("#color2").text(contadores[elem-1].cont);
+      break;
+    case 3:
+      if ($('#btMenos3').hasClass("Hidden"))
+        $('#btMenos3').removeClass('Hidden');
+      $("#color3").text(contadores[elem-1].cont);
+      break;
+    case 4:
+      if ($('#btMenos4').hasClass("Hidden"))
+        $('#btMenos4').removeClass('Hidden');
+      $("#color-Mezcla").text(contadores[elem-1].cont);
+      break;
+  }
+  actualizarMix(elem,color);
+/*
 	if(contador%2 == 0)
 	{
 		colorMix1[0] = HexToR(color);
@@ -305,10 +366,74 @@ function chooseColor(color){
     $("#text-c").text("Elige un color para la mezcla:");
 		$('#mix2').css("background-color", color);
 	}
+*/
 
-	contador++;
 }
+function actualizarMix(elem,color) {
+  var porcentaje=0;
+  var colorFinal;
+  $("#mix").empty();
+  var numPlus=0;
+  for(i=0;i<4;++i) {
+    if(contadores[i].cont!==0) {
+      porcentaje=Math.floor((contadores[i].cont/contador)*100);
+      contadores[i].porcentaje = porcentaje;
+      if(i===elem-1) {
+        colorFinal = color;
+        contadores[i].color = color;
+      }
+      else
+        colorFinal= contadores[i].color;
 
+      var html= "<div style=\"width: " + porcentaje + "%; text-align: center;float: left;height: 100%;position: relative;\">" +
+        "<div style=\"background-color: " + colorFinal + ";height: 85%;\"></div>" +
+        "<div class=\"color_percent\" style=\"color: rgb(0, 0, 0);height: 15%;\">" + porcentaje + "%</div> ";
+
+      //Si no es el único el elemento que hay y no es el último de la fila le añado un +
+      // y además su contador no es mayor que 1
+      if(contador>1 && numPlus<contador-1 && contadores[i].cont==1) {
+        html += "<i class='fa fa-plus-circle' aria-hidden='true' style='font-size: 10vw;z-index: 1;float: right;margin-right: -5px;position:absolute;right:-15px;top:25%;color:black;'></i></div>";
+        numPlus++;
+      }
+
+      $("#mix").append(html);
+    }
+  }
+
+}
+function minusColor(elem) {
+  var colorSeleccionado;
+  if(contadores[elem-1].cont>0)
+    contadores[elem-1].cont--;
+  switch (elem){
+    case 1:
+      if(contadores[elem-1].cont===0)
+        $('#btMenos1').addClass('Hidden');
+      $("#color1").text(contadores[elem-1].cont);
+      colorSeleccionado=rgbtohex($("#color1").css("background-color"));
+      break;
+    case 2:
+      if(contadores[elem-1].cont===0)
+        $('#btMenos2').addClass('Hidden');
+      $("#color2").text(contadores[elem-1].cont);
+      colorSeleccionado=rgbtohex($("#color2").css("background-color"));
+      break;
+    case 3:
+      if(contadores[elem-1].cont===0)
+        $('#btMenos3').addClass('Hidden');
+      $("#color3").text(contadores[elem-1].cont);
+      colorSeleccionado=rgbtohex($("#color3").css("background-color"));
+      break;
+    case 4:
+      if(contadores[elem-1].cont===0)
+        $('#btMenos4').addClass('Hidden');
+      $("#color-Mezcla").text(contadores[elem-1].cont);
+      colorSeleccionado=rgbtohex($("#color4").css("background-color"));
+      break;
+  }
+  contador--;
+  actualizarMix(elem,colorSeleccionado);
+}
 function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
@@ -318,22 +443,23 @@ function rgbToHex(r,g,b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 function auxiliar(){
-	chooseColor(rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
+	chooseColor(4,rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2])));
 
 }
 function mixColors(){
 
-	var mixValue = 0.8;
-	colorMixRes[0] = mix(colorMix1[0], colorMix2[0], mixValue);
+	//var mixValue = 0.8;
+	colorMixRes = mix(colorMix1,colorMix2);
+	/*colorMixRes[0] = mix(colorMix1[0], colorMix2[0], mixValue);
 	colorMixRes[1] = mix(colorMix1[1], colorMix2[1], mixValue);
-	colorMixRes[2] = mix(colorMix1[2], colorMix2[2], mixValue);
+	colorMixRes[2] = mix(colorMix1[2], colorMix2[2], mixValue);*/
   var colorResultante = rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2]));
 	$('#resultado').css("background-color",colorResultante);
 	$('#color-Mezcla').css("background-color",colorResultante);
   $('#resultado').click(function (e) {
     setColor(colorResultante);
-    if (!$('#ventana-mezcla').hasClass("Paleta-Hidden"))
-      $('#ventana-mezcla').addClass('Paleta-Hidden');
+    if (!$('#ventana-mezcla').hasClass("Hidden"))
+      $('#ventana-mezcla').addClass('Hidden');
     $('#canvas').css("z-index", 1);
   });
   setColor(colorResultante);
@@ -341,6 +467,37 @@ function mixColors(){
 	colorMezcla.addEventListener("touchend",auxiliar, false);
 
 }
-
-
+function rgbToCmyk(r, g, b) {
+  var c, m, y, k;
+  r = r / 255;
+  g = g / 255;
+  b = b / 255;
+  max = Math.max(r, g, b);
+  k = 1 - max;
+  if (k == 1) {
+    c = 0;
+    m = 0;
+    y = 0;
+  } else {
+    c = (1 - r - k) / (1 - k);
+    m = (1 - g - k) / (1 - k);
+    y = (1 - b - k) / (1 - k);
+  }
+  return [ c, m, y, k];
+}
+function cmykToRgb(c, m, y, k) {
+  var r, g, b;
+  r = 255 - ((Math.min(1, c * (1 - k) + k)) * 255);
+  g = 255 - ((Math.min(1, m * (1 - k) + k)) * 255);
+  b = 255 - ((Math.min(1, y * (1 - k) + k)) * 255);
+  return [ r, g,  b];
+}
+//Function to convert hex format to a rgb color
+function rgbtohex(rgb){
+  rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+  return (rgb && rgb.length === 4) ? "#" +
+    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+}
 

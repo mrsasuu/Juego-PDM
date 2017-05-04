@@ -274,10 +274,10 @@ function to_image(){
 
 function seleccionaPaleta()
 {
-	if($('#ventana-paleta').hasClass( "Paleta-Hidden" ))
-		$('#ventana-paleta').removeClass('Paleta-Hidden');
+	if($('#ventana-paleta').hasClass( "Hidden" ))
+		$('#ventana-paleta').removeClass('Hidden');
 	else
-		$('#ventana-paleta').addClass('Paleta-Hidden');
+		$('#ventana-paleta').addClass('Hidden');
 }
 
 function setColor(color){
@@ -286,7 +286,7 @@ function setColor(color){
 	colores[2] = HexToB(color);
   colores[3] = 1;
 
-	$('#ventana-paleta').addClass('Paleta-Hidden');
+	$('#ventana-paleta').addClass('Hidden');
 
 
 }
@@ -296,16 +296,16 @@ function setRadius(radioPincel){
     lapiz=false;
 		radio = radioPincel;
     numCerdasPincel=80;
-		$('#ventana-mezcla').addClass('Paleta-Hidden');
+		$('#ventana-mezcla').addClass('Hidden');
 	//}
 }
 
 function seleccionaPincel()
 {
-	if($('#ventana-mezcla').hasClass( "Paleta-Hidden" ))
-		$('#ventana-mezcla').removeClass('Paleta-Hidden');
+	if($('#ventana-mezcla').hasClass( "Hidden" ))
+		$('#ventana-mezcla').removeClass('Hidden');
 	else
-		$('#ventana-mezcla').addClass('Paleta-Hidden');
+		$('#ventana-mezcla').addClass('Hidden');
 }
 
 function seleccionaLapiz(){
