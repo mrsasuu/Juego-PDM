@@ -16,6 +16,7 @@ var colorMixRes = [255,255,255];
 var contador = 0;
 var contadores =[{cont:0,color:"",porcentaje:0},{cont:0,color:"",porcentaje:0},{cont:0,color:"",porcentaje:0},{cont:0,color:"",porcentaje:0}];
 var mode = 0;
+
 $(document).ready(function (e) {
 
   initialiseUI();
@@ -33,7 +34,6 @@ $(document).ready(function (e) {
   $('#canvas').css('top', marginTop + 'px');
   $('#ventana-paleta').attr('bottom', '34px');
   $('ion-content').removeClass();
-  $('#ventana-mezcla').addClass('Hidden');
   drawingCanvas = document.getElementById('canvas');
   var c = document.getElementById("canvasFondo");
   //var contextL = c.getContext("2d");
@@ -48,7 +48,6 @@ $(document).ready(function (e) {
   }
 
 });
-
 
 function lockOrientation(e) {
   if (window.orientation == -90) {
