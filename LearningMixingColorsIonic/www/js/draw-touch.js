@@ -7,6 +7,7 @@ var radio = 13;
 var drawingCanvas;
 var context;
 var dist;
+var deseleccionar = false;
 var goma = false;
 var lapiz = true;
 var marginTop = 44;
@@ -327,6 +328,7 @@ function seleccionaGoma() {
 }
 
 function chooseColor(elem,color){
+  deseleccionar = false;
   contadores[elem-1].cont++;
   contador++;
   switch (elem){
@@ -356,34 +358,37 @@ function chooseColor(elem,color){
 function actualizarMix(elem,color) {
   var porcentaje=0;
   var colorFinal;
-  $("#mix").empty();
+  
   var arrayCont = [];
+  if(!deseleccionar)
+  {
+	  $("#mix").empty();
 
+	  for(i=0;i<4;++i) {
+		if (contadores[i].cont !== 0) {
+		  porcentaje = Math.floor((contadores[i].cont / contador) * 100);
+		  contadores[i].porcentaje = porcentaje;
+		  if (i === elem - 1) {
+			colorFinal = color;
+			contadores[i].color = color;
+		  }
+		  else
+			colorFinal = contadores[i].color;
 
-  for(i=0;i<4;++i) {
-    if (contadores[i].cont !== 0) {
-      porcentaje = Math.floor((contadores[i].cont / contador) * 100);
-      contadores[i].porcentaje = porcentaje;
-      if (i === elem - 1) {
-        colorFinal = color;
-        contadores[i].color = color;
-      }
-      else
-        colorFinal = contadores[i].color;
+		  arrayCont.push({cont:contadores[i].cont,porcentaje:contadores[i].porcentaje, color: contadores[i].color});
+		}
+	  }
 
-      arrayCont.push({cont:contadores[i].cont,porcentaje:contadores[i].porcentaje, color: contadores[i].color});
-    }
-  }
+	  for(j=0;j<arrayCont.length;j++) {
+		var html = "<div style=\"width: " + arrayCont[j].porcentaje + "%; text-align: center;float: left;height: 100%;position: relative;\">" +
+		  "<div style=\"background-color: " + arrayCont[j].color + ";height: 85%;\"></div>" +
+		  "<div class=\"color_percent\" style=\"color: rgb(0, 0, 0);height: 15%;\">" +  arrayCont[j].porcentaje + "%</div> ";
 
-  for(j=0;j<arrayCont.length;j++) {
-    var html = "<div style=\"width: " + arrayCont[j].porcentaje + "%; text-align: center;float: left;height: 100%;position: relative;\">" +
-      "<div style=\"background-color: " + arrayCont[j].color + ";height: 85%;\"></div>" +
-      "<div class=\"color_percent\" style=\"color: rgb(0, 0, 0);height: 15%;\">" +  arrayCont[j].porcentaje + "%</div> ";
+		if(arrayCont.length>1 && j<arrayCont.length-1)
+		  html += "<i class='fa fa-plus-circle' aria-hidden='true' style='font-size: 10vw;z-index: 1;float: right;margin-right: -5px;position:absolute;right:-12px;top:25%;color:black;'></i></div>";
 
-    if(arrayCont.length>1 && j<arrayCont.length-1)
-      html += "<i class='fa fa-plus-circle' aria-hidden='true' style='font-size: 10vw;z-index: 1;float: right;margin-right: -5px;position:absolute;right:-12px;top:25%;color:black;'></i></div>";
-
-    $("#mix").append(html);
+		$("#mix").append(html);
+	  }
   }
 
 
@@ -434,9 +439,16 @@ function auxiliar(){
 
 }
 function mixColors(){
+
+  deseleccionar = true;
 	colorMixRes = mix(colorMix1,colorMix2);
   var colorResultante = rgbToHex(Math.floor(colorMixRes[0]),Math.floor(colorMixRes[1]),Math.floor(colorMixRes[2]));
 	$('#resultado').css("background-color",colorResultante);
+	
+	if(colorResultante == "#000000")
+	{
+		$("#color-Mezcla").css("color","white!important");
+	}
 	$('#color-Mezcla').css("background-color",colorResultante);
   $('#resultado').click(function (e) {
     setColor(colorResultante);
@@ -447,6 +459,17 @@ function mixColors(){
   setColor(colorResultante);
 	var colorMezcla = document.getElementById('color-Mezcla');
 	colorMezcla.addEventListener("touchend",auxiliar, false);
+	
+	for(var elem = 1; elem < 5; elem++)
+	{
+		var contDelete = contadores[elem-1].cont
+		for(var j = 0; j < contDelete; j++)
+		{
+			minusColor(elem);
+		}
+		
+	}
+  
 
 }
 function rgbToCmyk(r, g, b) {
