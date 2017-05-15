@@ -37,7 +37,8 @@
 	border-radius: 5px;
 	border-color: black;
   width: 80%;
-  height: 80%;
+  height: 80%!important;
+  min-height: 80%!important;
 
 }
 

@@ -27,6 +27,7 @@
   <!-- ionic/angularjs js -->
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+
   <!-- cordova script (this will be a 404 during development) -->
   <script src="cordova.js"></script>
 
@@ -48,6 +49,8 @@
       color: #FFF;
       font-family: Verdana, Geneva, sans-serif;
       overflow: hidden;
+
+	  background-color: white!important;
     }
 
     #container {
@@ -60,7 +63,7 @@
       top: 0px;
       left: 0px;
       cursor: crosshair;
-      background-color: #FFF;
+      background-color: #FFFFF!important;
       margin: 0px;
       padding: 0px;
     }
@@ -73,19 +76,24 @@
   </style>
 
 </head>
-<body ng-app="starter">
+<body>
+
+
 
 <ion-pane>
-  <ion-header-bar id ="Cabecera" class="bar-stable">
+
+ 
+    <ion-header-bar id ="Cabecera" class="bar-stable" ng-controller="FileController">
     <div class="bar bar-header">
-      <button class="button button-icon icon ion-navicon"></button>
-      <div id="titulo" class="title">Pintar</div>
-      <a class="button button-clear button-positive" onclick="to_image()">
+      <ion-nav-back-button>Atras</ion-nav-back-button>
+      <div id="titulo" class="title title-left" style="text-align: center;color: black;">Pintar</div>
+	   <!-- <a class="button button-clear button-positive" onclick="to_image()"> -->
+	   <a class="button button-clear button-positive" ng-click="download()">
         <i class ="icon fa fa-floppy-o"> </i>
       </a>
     </div>
   </ion-header-bar>
-  <ion-content>
+  <ion-content ng-controller="FileController">
     <div id="container">
 
 
@@ -168,10 +176,6 @@
         <a id="mezcla" class="tab-item " onclick="seleccionaMezcla()">
           <img class="icon col-center" src="img/palette.svg" />
 
-        </a>
-        <a class="tab-item "onclick="seleccionaLapiz()" >
-          <img class="icon col-center" src="img/medium-brush.svg" />
-          <!--<img class="icon col-center" src="img/edit.svg" />-->
         </a>
         <a class="tab-item "onclick="seleccionaGoma()">
           <img class="icon col-center" src="img/eraser.svg" />

@@ -247,8 +247,27 @@ function mix() {
 	//val = (colour1 + colour2) / 2;
   return val;
 }
+
+function putImage()
+{
+  var canvas1 = document.getElementById("canvas");        
+  if (canvas1.getContext) {
+     var ctx = canvas1.getContext("2d");                
+     var myImage = canvas1.toDataURL("image/png");      
+  }                          
+
+}
+
+function saveBase64AsFile(base64, fileName) {
+
+    var link = document.createElement("a");
+
+    link.setAttribute("href", base64);
+    link.setAttribute("download", fileName);
+    link.click();
+}  
 function to_image() {
-  var canvas = document.getElementById("canvas");
+  /*var canvas = document.getElementById("canvas");
   var image = canvas.toDataURL();
 
   var aLink = document.createElement('a');
@@ -260,6 +279,49 @@ function to_image() {
   /*var canvas = $("#canvas");
    //document.getElementById("theimage").src = canvas.toDataURL();
    Canvas2Image.saveAsPNG(canvas);*/
+   /*var image = canvas.toDataURL();
+   var canvas = document.createElement( 'canvas' );
+            var ctx = canvas.getContext( '2d' );
+            void ctx.drawImage( this, 0, 0, img.width, img.height);
+            var dataURI = canvas.toDataURL().replace( /data:image\/png;base64,/, '' );
+            function successCallback( result ) {
+                q.resolve( 'file:///' + result );
+            }
+            function failureCallback( err ) {
+                console.error( err );
+                q.reject( err );
+            }
+            cordova.exec( successCallback, failureCallback, "Canvas2ImagePlugin", "saveImageDataToLibrary", [dataURI] );
+			*/
+		/*	
+		var ctx = canvas1.getContext("2d");                
+		var myImage = canvas1.toDataURL("image/png");
+		 var params = {data: myImage, prefix: 'myPrefix_', format: 'JPG', quality: 80, mediaScanner: true};
+		window.imageSaver.saveBase64Image(params,
+        function (filePath) {
+          alert('File saved on ' + filePath);
+        },
+        function (msg) {
+          alert(msg);
+        }
+      );*//*
+		window.canvas2ImagePlugin.saveImageDataToLibrary(
+        function(msg){
+            console.log(msg);
+        },
+        function(err){
+            console.log(err);
+        },
+        document.getElementById('canvas')
+    );*/
+	
+	var canvas = document.getElementById("canvas"); 
+	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+
+	download(image);
+	//saveBase64AsFile(image,"imagen.png");
+	
+//window.location.href=image; // it will save locally
 }
 
 function seleccionaPaleta() {

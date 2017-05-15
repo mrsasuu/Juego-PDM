@@ -34,15 +34,20 @@
       background-color: #333;
       color: #FFF;
       font-family: Verdana, Geneva, sans-serif;
-      overflow: hidden;
+	  overflow: hidden;
+	  overflow-y: hidden!important; 
     }
 
     #container {
+	overflow: hidden;
+	  overflow-y: hidden!important; 
       width: 1024px;
       height: 768px;
       overflow: hidden;
     }
     canvas {
+	overflow: hidden;
+	  overflow-y: hidden!important; 
       position: absolute;
       top: 0px;
       left: 0px;
@@ -51,19 +56,23 @@
       margin: 0px;
       padding: 0px;
     }
+	[noScroll] {
+  overflow: hidden;
+}
+	
   </style>
 
 </head>
-<body ng-app="starter">
+<body ng-app="starter" [attr.noScroll]="shouldScroll">
 
-<ion-pane>
+<ion-pane [attr.noScroll]="shouldScroll">
   <ion-header-bar id ="Cabecera" class="bar-stable">
     <div class="bar bar-header">
       <ion-nav-back-button>Atras</ion-nav-back-button>
       <div id="titulo" class="title title-left" style="text-align: center;color: black;">Mezcladora</div>
     </div>
   </ion-header-bar>
-  <ion-content>
+  <ion-content [attr.noScroll]="shouldScroll">
     <div id="container">
       <div id="ventana-mezcla" class="ion-grid" >
         <div class="card Ventana Pincel row">
@@ -85,7 +94,7 @@
           <div class="col Pincel-Div col-30">
           </div>
           <div class="col Pincel-Div col-30">
-            <div id="resultado"class ="Recuadro center"></div>
+            <div id="resultado"class ="Recuadro2 center"></div>
           </div><div class="col Pincel-Div col-30"></div>
 
         </div>
