@@ -28,7 +28,11 @@ $(document).ready(function (e) {
 
   var height = parseInt($('#Cabecera').css('padding-top')) + parseInt($('#Cabecera').css('padding-bottom'));
   var height2 = parseInt($('#Tabs').css('padding-top')) + parseInt($('#Tabs').css('padding-bottom'));
-
+	
+	
+	
+	
+	
   $('#container').attr('height', $(window).height());
   $('#container').attr('width', $(window).width());
   $('#canvas').attr('height', $(window).height() - $('ion-header-bar').height() - height - $('#Tabs').height() - height2);
@@ -48,6 +52,22 @@ $(document).ready(function (e) {
     Pincel = [];
     drawingCanvas.addEventListener("touchstart", onDown, false);
   }
+  
+  
+  var can = document.getElementById('canvas');
+    h = parseInt(document.getElementById("canvas").getAttribute("height"));
+    w=parseInt(document.getElementById("canvas").getAttribute("width"));
+
+    // get it's context
+    hdc = can.getContext('2d');
+
+    hdc.strokeStyle = 'white';
+    hdc.lineWidth = 2;
+
+    // Fill the path
+    hdc.fillStyle = "#ffffff";
+    hdc.fillRect(0,0,w,h);
+    can.style.opacity = '1';
 
 });
 
@@ -166,7 +186,7 @@ function onMove(e) {
   }
   //Mezclamos el color de la cerda con el color del pixel con un factor mixval
     r = Pincel.colour[0];
-    g = Pincel.colour[1]; 
+    g = Pincel.colour[1];
     b = Pincel.colour[2];
     a = Pincel.colour[3];
 
@@ -179,98 +199,38 @@ function onMove(e) {
   tmpPixel[1] = g;
   tmpPixel[2] = b;
   tmpPixel[3] = a;
-  
-  if(!cubo)
-  {
-	  if (goma) {
-		context.globalCompositeOperation = 'destination-out';
-		context.beginPath();
-		context.arc(xp, yp, radio, 0, 2 * Math.PI, false);
-		context.fill();
-		context.restore();
-
-	  } else if (lapiz) {
-		context.globalCompositeOperation = 'source-over';
-		//context.globalCompositeOperation = 'lighter';
-		context.lineWidth = radio;
-		context.lineTo(xp, yp);
-		context.stroke();
-	  }
-	  
-  }else{
-	  var pixelStack = [[xp, yp]];
-	  var canvas = document.getElementById('canvas');
-		var canvasWidth = canvas.width;
-		var canvasHeight = canvas.height;
-
-	while(pixelStack.length)
-	{
-	  var newPos, x, y, pixelPos, reachLeft, reachRight;
-	  newPos = pixelStack.pop();
-	  x = newPos[0];
-	  y = newPos[1];
-	  
-	  pixelPos = (y*canvasWidth + x) * 4;
-	  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
-	  {
-		pixelPos -= canvasWidth * 4;
-	  }
-	  pixelPos += canvasWidth * 4;
-	  ++y;
-	  reachLeft = false;
-	  reachRight = false;
-	  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
-	  {
-		colorPixel(pixelPos);
-
-		if(x > 0)
-		{
-		  if(matchStartColor(pixelPos - 4))
-		  {
-			if(!reachLeft){
-			  pixelStack.push([x - 1, y]);
-			  reachLeft = true;
-			}
-		  }
-		  else if(reachLeft)
-		  {
-			reachLeft = false;
-		  }
-		}
-		
-		if(x < canvasWidth-1)
-		{
-		  if(matchStartColor(pixelPos + 4))
-		  {
-			if(!reachRight)
-			{
-			  pixelStack.push([x + 1, y]);
-			  reachRight = true;
-			}
-		  }
-		  else if(reachRight)
-		  {
-			reachRight = false;
-		  }
-		}
-				
-		pixelPos += canvasWidth * 4;
-	  }
-	}
-	context.putImageData(colores, 0, 0);
-	  
-	
-	  }
-
   //Creamos un path con el color del pixel temporal con tamaño de línea de 1 desde la posición inicial
   context.beginPath();
   context.strokeStyle = 'rgba( ' + tmpPixel[0] + ', ' + tmpPixel[1] + ', ' + tmpPixel[2] + ', ' + tmpPixel[3] + ')';
   context.lineWidth = 1;
   context.moveTo(lastX, lastY);
-  
+  if (goma) {
+	context.globalCompositeOperation = 'destination-out';
+    context.beginPath();
+    context.arc(xp, yp, radio, 0, 2 * Math.PI, false);
+    context.fill();
+    context.restore();
+
+  } else if (lapiz) {
+	context.globalCompositeOperation = 'source-over';
+	//context.globalCompositeOperation = 'lighter';
+    context.lineWidth = radio;
+    context.lineTo(xp, yp);
+    context.stroke();
+  } else {
+
+  }
   //Guardamos la posición por la que nos habíamos quedado para empezar desde ahí
   lastX = xp;
   lastY = yp;
+}
+//Terminamos de pintar y quitamos los listener y las posiciones por donde continuar
+function onUp(e) {
+  lastX = 0;
+  lastY = 0;
+
+  document.removeEventListener("touchmove", onMove, false);
+  document.removeEventListener("touchend", onUp, false);
 }
 //Terminamos de pintar y quitamos los listener y las posiciones por donde continuar
 function onUp(e) {
@@ -317,17 +277,9 @@ function mix() {
       }
     }
   }
- /* var color1 = rgbToCmyk(colour1[0],colour1[1],colour1[2]);
-  var color2 = rgbToCmyk(colour2[0],colour2[1],colour2[2]);
-  */
-/*
-  resColor[0] = color1[0]+color2[0];
-  resColor[1] = color1[1]+color2[1];
-  resColor[2] = color1[2]+color2[2];
-  resColor[3] = color1[3]+color2[3];
-*/
+ 
   val = cmykToRgb(resColor[0],resColor[1],resColor[2],resColor[3]);
-	//val = (colour1 + colour2) / 2;
+	
   return val;
 }
 
@@ -393,8 +345,6 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 function savebase64AsImageFile(folderpath,filename,content,contentType){
     // Convert the base64 string in a Blob
     var DataBlob = b64toBlob(content,contentType);
-    alert("Starting to write the file :3");
-	alert(filename);
     console.log("Starting to write the file :3");
     
     window.resolveLocalFileSystemURL(folderpath, function(dir) {
@@ -414,71 +364,14 @@ function savebase64AsImageFile(folderpath,filename,content,contentType){
 
 
 function to_image() {
-  /*var canvas = document.getElementById("canvas");
-  var image = canvas.toDataURL();
-
-  var aLink = document.createElement('a');
-  var evt = document.createEvent("HTMLEvents");
-  evt.initEvent("click");
-  aLink.download = 'image.png';
-  aLink.href = image;
-  aLink.dispatchEvent(evt);
-  /*var canvas = $("#canvas");
-   //document.getElementById("theimage").src = canvas.toDataURL();
-   Canvas2Image.saveAsPNG(canvas);*/
-   /*var image = canvas.toDataURL();
-   var canvas = document.createElement( 'canvas' );
-            var ctx = canvas.getContext( '2d' );
-            void ctx.drawImage( this, 0, 0, img.width, img.height);
-            var dataURI = canvas.toDataURL().replace( /data:image\/png;base64,/, '' );
-            function successCallback( result ) {
-                q.resolve( 'file:///' + result );
-            }
-            function failureCallback( err ) {
-                console.error( err );
-                q.reject( err );
-            }
-            cordova.exec( successCallback, failureCallback, "Canvas2ImagePlugin", "saveImageDataToLibrary", [dataURI] );
-			*/
-		/*	
-		var ctx = canvas1.getContext("2d");                
-		var myImage = canvas1.toDataURL("image/png");
-		 var params = {data: myImage, prefix: 'myPrefix_', format: 'JPG', quality: 80, mediaScanner: true};
-		window.imageSaver.saveBase64Image(params,
-        function (filePath) {
-          alert('File saved on ' + filePath);
-        },
-        function (msg) {
-          alert(msg);
-        }
-      );*//*
-		window.canvas2ImagePlugin.saveImageDataToLibrary(
-        function(msg){
-            console.log(msg);
-        },
-        function(err){
-            console.log(err);
-        },
-        document.getElementById('canvas')
-    );
-	
-	var canvas = document.getElementById("canvas"); 
-	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
-
-	//download(image);
-	//saveBase64AsFile(image,"imagen.png");
-	
-//window.location.href=image; // it will save locally*/
 
 	cordova.plugins.photoLibrary.requestAuthorization(
 		  function () {
-			// Retry
 			
 			 var canvas = document.getElementById("canvas"); 
 			var image = canvas.toDataURL("image/png");//.replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
-			
-			alert(image);
+
 			
 				/** Process the type1 base64 string **/
 			var myBaseString = image;
@@ -490,11 +383,12 @@ function to_image() {
 			// get the real base64 content of the file
 			var realData = block[1].split(",")[1];// In this case "iVBORw0KGg...."
 			
-			alert(realData);
+			
 			// The path where the file will be created
-			var folderpath = "file:///storage/emulated/0/";
+			var time = new Date();
+			var folderpath = "file:///storage/emulated/0/MixingColors/";
 			// The name of your file, note that you need to know if is .png,.jpeg etc
-			var filename = "myimage.png";
+			var filename = "myimage"+time.getTime()+".png";
 
 			savebase64AsImageFile(folderpath,filename,realData,dataType);
 			
