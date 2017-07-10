@@ -2,20 +2,95 @@
 
 
 .Paleta{
-	position: absolute;	
+	position: absolute;
 	bottom: 34px;
-	
+
 }
-.Paleta-Hidden{
-	display: none;	
+#ventana-mezcla{
+  width: 100%;
+  height: 100%;
+  background: white;
 }
+.Ventana{
+	top: 30px;
+  height: 20%;
+}
+.Mezclar{
+  top: 31%;
+  position: absolute;
+  height: 15%;
+}
+
+.Recuadro{
+    border-style: solid;
+    border-width: 1px;
+	border-radius: 5px;
+	border-color: black;
+  width: 100%;
+  height: 100%;
+
+}
+
+.Recuadro2{
+    border-style: solid;
+    border-width: 1px;
+	border-radius: 5px;
+	border-color: black;
+  width: 80%;
+  height: 80%!important;
+  min-height: 80%!important;
+
+}
+
+.RecuadroS{
+  width: 100%;
+  height: 100%;
+	color: black;
+  font-size: 28vw;
+}
+.BotonesMenos{
+  width: 100%;
+  height: 100%;
+  color: black;
+  font-size: 10vw;
+  margin-top: 1.5%;
+}
+.Resultado{
+	top: 46%;
+	position: absolute;
+  height: 20%;
+}
+
+.Mezclar button{
+
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #2488ff;
+  color: white;
+  font-size: 4.5vw;
+}
+#selector-color{
+  height: 28%;
+}
+
+
 
 .Pincel{
 	width:95%!important;
-	position: absolute;	
+	position: absolute;
 	bottom: 34px;
 }
-
+.Cian{
+  background-color: #00FFFF;
+}
+.Magenta{
+  background-color: #FF00FF;
+}
+.Amarillo{
+  background-color: #FFFF00;
+}
 .Azul{
 	background-color: blue;
 }
@@ -23,31 +98,28 @@
 .Negro{
 	background-color: black;
 }
-
-.Verde{
-	background-color: green;
-}
-
 .Rojo{
 	background-color: red;
 }
-
-.Naranja{
-	background-color: orange;
+#text-color{
+  margin-left: 10px;
+  clear: both;
+  position: relative;
+  top: 1%;
 }
-
-.Morado{
-	background-color: purple;
+#text-color p{
+  color:black;
+  font-size: 4.5vw;
+  font-weight: bold;
 }
-
-.Turquesa{
-	background-color: #00c7ff;
+#color-seleccionado{
+  box-shadow: 1px 2px 3px #777;
+  border-radius: 5px;
+  width: 30%;
+  height: 70%;
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
-
-.Gris{
-	background-color: #929292;
-}
-
 .Color{
 	box-shadow: 1px 2px 3px #777;
 	border-radius: 7px;
@@ -58,7 +130,55 @@
     margin-right: 10px;
     margin-top: 10px;
 }
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+	 vertical-align: middle;
+}
 
+#Colours-1{
+  height: 50%;
+  margin-top: 1%;
+}
+.Color2{
+  box-shadow: 1px 2px 3px #777;
+  border-radius: 7px;
+  margin: 2%;
+  min-height: 60px;
+  height: 95%;
+  color: black;
+  text-align: center;
+  font-size: 10vw;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+}
+.margenes{
+  margin-top: 3% !important;
+}
+.imagenes-menu{
+  background-repeat: no-repeat;
+  background-size: 25%;
+  background-position-x: 100%;
+  background-color: #11c1f3 !important;
+  background-position-y: 50%;
+  color: white !important;
+  padding: 10% !important;
+  font-size: 5vw;
+}
+#pintar{
+  background-image: url("../img/pintar.png");
+}
+#mezclar{
+  background-image: url("../img/mezclar.png");
+}
+#salir{
+  background-image: url("../img/salir.png");
+}
 .Pincela-Div{
 	width: 50px;
     height: 50px;
@@ -66,4 +186,7 @@
     margin-bottom: 10px;
     margin-right: 10px;
     margin-top: 10px;
+}
+.Hidden{
+  display: none;
 }

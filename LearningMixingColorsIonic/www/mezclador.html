@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/canvas2image.js"></script>
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <script language="javascript" src="js/jquery-1.5.1.min.js"></script>
+  <script language="javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+  <script language="javascript" src="js/draw-touch-mezclar.js"></script>
+  <script type="text/javascript" src="js/farbtastic.js"></script>
+  <link rel="stylesheet" media="screen" type="text/css" href="css/farbtastic.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="css/vader/jquery-ui-1.8.14.custom.css" />
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background-color: #333;
+      color: #FFF;
+      font-family: Verdana, Geneva, sans-serif;
+	  overflow: hidden;
+	  overflow-y: hidden!important; 
+    }
+
+    #container {
+	overflow: hidden;
+	  overflow-y: hidden!important; 
+      width: 1024px;
+      height: 768px;
+      overflow: hidden;
+    }
+    canvas {
+	overflow: hidden;
+	  overflow-y: hidden!important; 
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      cursor: crosshair;
+      background-color: #FFF;
+      margin: 0px;
+      padding: 0px;
+    }
+	[noScroll] {
+  overflow: hidden;
+}
+	
+  </style>
+
+</head>
+<body ng-app="starter" [attr.noScroll]="shouldScroll">
+
+<ion-pane [attr.noScroll]="shouldScroll">
+  <ion-header-bar id ="Cabecera" class="bar-stable">
+    <div class="bar bar-header">
+      <ion-nav-back-button>Atras</ion-nav-back-button>
+      <div id="titulo" class="title title-left" style="text-align: center;color: black;">Mezcladora</div>
+    </div>
+  </ion-header-bar>
+  <ion-content [attr.noScroll]="shouldScroll">
+    <div id="container">
+      <div id="ventana-mezcla" class="ion-grid" >
+        <div class="card Ventana Pincel row">
+          <div id="mix" class="Recuadro col center">
+
+          </div>
+        </div>
+
+        <div class="Mezclar row">
+          <div class="col Pincel-Div col-30">
+          </div>
+          <div class="col Pincel-Div col-30" style="text-align:center;">
+            <button onclick="mixColors()">Mezclar</button>
+          </div><div class="col Pincel-Div col-30"></div>
+
+        </div>
+
+        <div class="Resultado row">
+          <div class="col Pincel-Div col-30">
+          </div>
+          <div class="col Pincel-Div col-30">
+            <div id="resultado"class ="Recuadro2 center"></div>
+          </div><div class="col Pincel-Div col-30"></div>
+
+        </div>
+
+        <div id="selector-color"class="card Pincel col">
+          <div id="text-color" class="row"><div class="col"><p id="text-c">Elige un color para la mezcla:</p></div> </div>
+          <div id="Colours-1" class="row">
+            <div id="color1" class="col Magenta Color2 " onclick="chooseColor(1,'#FF00FF')"></div>
+            <div id="color2" class="col Amarillo Color2 " onclick="chooseColor(2,'#FFFF00')"></div>
+            <div id="color3" class="col Cian Color2 " onclick="chooseColor(3,'#00FFFF')"></div>
+            <div id="color-Mezcla" class="col Color2 " ></div>
+          </div>
+          <div id="Colours-counter" class="row">
+            <div  class="col BotonesMenos center " onclick="minusColor(1)"><i id="btMenos1" class ="icon fa fa-minus-circle Hidden"> </i></div>
+            <div  class="col BotonesMenos center " onclick="minusColor(2)"><i id="btMenos2" class ="icon fa fa-minus-circle Hidden"> </i></div>
+            <div  class="col BotonesMenos center " onclick="minusColor(3)"><i id="btMenos3" class ="icon fa fa-minus-circle Hidden"> </i></div>
+            <div  class="col BotonesMenos center " onclick="minusColor(4)"><i id="btMenos4" class ="icon fa fa-minus-circle Hidden"> </i></div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </ion-content>
+</ion-pane>
+</body>
+</html>
