@@ -674,5 +674,13 @@ function rgbtohex(rgb){
     ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
 
+function save(){
+	var canvas = document.getElementById("canvas");
+	
+	var dt = canvas.get(0).toDataUrl();
+	this.href = dt;
+	
+	
+}
 
 
