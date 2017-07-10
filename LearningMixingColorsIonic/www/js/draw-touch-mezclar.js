@@ -35,7 +35,7 @@ $(document).ready(function (e) {
   $('#ventana-paleta').attr('bottom', '34px');
   $('ion-content').removeClass();
   drawingCanvas = document.getElementById('canvas');
-  var c = document.getElementById("canvasFondo");
+  //var c = document.getElementById("canvasFondo");
   //var contextL = c.getContext("2d");
   /* contextL.rect(20, 20, 150, 100);
   contextL.stroke(); */

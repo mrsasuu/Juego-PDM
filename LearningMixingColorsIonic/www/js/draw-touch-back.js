@@ -267,9 +267,6 @@ function to_image(){
   aLink.download = 'image.png';
   aLink.href = image;
   aLink.dispatchEvent(evt);
-  /*var canvas = $("#canvas");
-  //document.getElementById("theimage").src = canvas.toDataURL();
-  Canvas2Image.saveAsPNG(canvas);*/
 }
 
 function seleccionaPaleta()
@@ -287,8 +284,6 @@ function setColor(color){
   colores[3] = 1;
 
 	$('#ventana-paleta').addClass('Hidden');
-
-
 }
 
 function setRadius(radioPincel){
